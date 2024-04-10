@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/Kanbas/styles.css" />
+    <link rel="stylesheet" href="/Kanbas/Navigation/index.css" />
+    <link rel="stylesheet" href="/Kanbas/Courses/Navigation/index.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+    <script src="/Kanbas/Navigation/index.js"></script>
+    <script src="index.js"></script>
+    <link href="/libs/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        @media (max-width: 600px) {
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-auto" >
+        <div class="row">
+            <div class="col-sm-auto sidebar">
+                <script>navSidebar("Dashboard")</script>
+            </div>
+            <div class="col-sm p-3 min-vh-100">
+                <h1>Dashboard</h1>
+                <hr />
+                <h2>Published Courses (12)</h2>
+                <hr />
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="row row-cols-1 row-cols-md-5 g-4">
+                            <script>getCourses();</script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

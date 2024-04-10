@@ -1,0 +1,20 @@
+.wd-status-text * {
+    color: red;
+    font-size: 2em;
+    margin-bottom: 2px;
+    font-size: 1em;
+    list-style: none;
+}
+.wd-status-header * {
+  color: red;
+}
+
+.wd-status-text li {
+  color: black;
+
+}
+
+.wd-status-text i {
+  color: gray;
+
+}

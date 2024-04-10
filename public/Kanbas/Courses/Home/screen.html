@@ -1,0 +1,197 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="/libs/bootstrap/bootstrap.min.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/Kanbas/styles.css" />
+  <link rel="stylesheet" href="/Kanbas/Navigation/index.css" />
+  <link rel="stylesheet" href="/Kanbas/Courses/Navigation/index.css" />
+  <link rel="stylesheet" href="/Kanbas/Courses/Home/index.css" />
+  <script src="/Kanbas/Navigation/index.js">
+  </script>
+  <script src="/libs/bootstrap/bootstrap.min.js">
+  </script>
+</head>
+
+<body>
+
+
+  <nav class="d-md-none navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleCourseNav"
+        aria-controls="navbarToggleCourseNav" aria-expanded="false" aria-label="Toggle course nav">
+        <span class="fa fa-chevron-down"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
+
+    <script>navSidebar("Courses")</script>
+  </div>
+
+
+  <div class="collapse" id="navbarToggleCourseNav" data-bs-theme="dark">
+    <script>courseNav("Home")</script>
+  </div>
+
+  <div class="collapse show" id="navbarToggleExternalContent">
+    <div class="collapse show" id="navbarToggleCourseNav">
+      <div class="d-flex flex-row">
+        <div class="d-none d-md-block ">
+          <ul class="wd-kanbas-navigation">
+            <script>navSidebar("Courses")</script>
+          </ul>
+        </div>
+        <div class="d-flex flex-fill">
+          <div class="d-flex flex-column flex-fill">
+            <div class="d-none d-md-block container">
+              <div class="row pt-2">
+                <div class="col-1">
+                  <button class="btn btn-outline-danger" type="button"> <i class="fas fa-bars"></i> </button>
+                </div>
+                <div class="col-8 wd-status-header">
+                    <h3 >CS 1234 > Modules</h3>
+                </div>
+                <div class="col-3">
+                  <button type="button" class="btn btn-light"><i class="fas fa-glasses"></i> Student View</button>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="d-flex flex-row">
+              <div class="d-none d-md-block">
+                <ul class="wd-navigation">
+                  <script> courseNav("Home")</script>
+                </ul>
+              </div>
+              <div class="flex-fill">
+
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-light">Collapse All</button>
+                  <button type="button" class="btn btn-light">View Progress</button>
+                  <button type="button" class="btn btn-light"> <i class="fa fa-check-circle text-success"></i> Publish
+                    All</button>
+                  <button type="button" class="btn btn-danger">+ Module</button>
+                  <button type="button" class="btn btn-light"><i class="fa fa-ellipsis-v"></i></button>
+
+                </div>
+                <ul class="list-group wd-modules">
+                  <ul class="list-group wd-modules">
+                    <li class="list-group-item">
+                      <div>
+                        <i class="fa fa-ellipsis-v"></i> Week 1
+                        <span class="float-end">
+                          <i class="fa fa-check-circle text-success"></i>
+                          <i class="fa fa-plus ms-2"></i>
+                          <i class="fa fa-ellipsis-v ms-2"></i>
+                        </span>
+                      </div>
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          <i class="fa fa-ellipsis-v"></i> Learning Objectives
+                          <span class="float-end">
+                            <i class="fa fa-check-circle text-success"></i>
+                            <i class="fa fa-ellipsis-v ms-2"></i>
+                          </span>
+                        </li>
+                      </ul>
+                    </li>
+                    <li class="list-group-item">
+                      <div>
+                        <i class="fa fa-ellipsis-v"></i> Week 2
+                        <span class="float-end">
+                          <i class="fa fa-check-circle text-success"></i>
+                          <i class="fa fa-plus ms-2"></i>
+                          <i class="fa fa-ellipsis-v ms-2"></i>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+              </div>
+              <div class="flex-grow-0 me-2 d-none d-lg-block" style="width: 250px">
+                <h5>Course Status</h5>
+                <button type="button" class="btn btn-light"><i class="fas fa-ban"></i> Unpublish</button>
+                <button type="button" class="btn btn-success" disabled><i class="far fa-check-circle"></i>
+                  Published</button>
+                <br><br>
+                <div class="btn-group-vertical gap-2 " role="group">
+                  <button type="button" class="btn btn-light"> <i class="fas fa-file-import"></i> Import Existing
+                    Content</button>
+                  <button type="button" class="btn btn-light"> <i class="fas fa-upload"></i> Import from
+                    Commons</button>
+                  <button type="button" class="btn btn-light"> <i class="fas fa-bullseye"></i> Choose Home Page</button>
+                  <button type="button" class="btn btn-light"> <i class="far fa-chart-bar"></i> View Course
+                    Stream</button>
+                  <button type="button" class="btn btn-light"> <i class="fas fa-bullhorn"></i> New
+                    Announcements</button>
+                  <button type="button" class="btn btn-light"> <i class="fas fa-chart-bar"></i> New Analytics</button>
+                  <button type="button" class="btn btn-light"> <i class="fas fa-bell"></i> View Course
+                    Notifications</button>
+                </div>
+
+                <br><br>
+                <h5>
+                  To Do
+                </h5>
+                <hr>
+                <ul class="wd-status-text">
+                  <li>
+                    <a href="/Kanbas/Courses/Assignments/screen.html">Assignment 1</a>
+                    <ul>
+                      <li> 100 points, Due July 1</li>
+                    </ul>
+                  </li>
+                </ul>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <h5> Coming up </h5>
+                  </div>
+                  <div class="col wd-status-text"> <a href="#"> <i class="far fa-calendar-alt"></i> View Calendar</a>
+                  </div>
+
+                </div>
+
+                <hr>
+                <ul class="wd-status-text fa-ul">
+                  <li> <i class="far fa-calendar-alt"></i> <a href="">Lect 1</a>
+                    <ul>
+                      <li>
+                        CS1234, July 1
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li> <i class="far fa-calendar-alt"></i> <a href="">Lect 2</a>
+                    <ul>
+                      <li>
+                        CS1234, July 12
+                      </li>
+                    </ul>
+                  </li>
+                  <li> <i class="far fa-calendar-alt"></i> <a href="">Lect 3</a>
+                    <ul>
+                      <li>
+                        CS1234, July 26
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
