@@ -9,10 +9,11 @@ import { useState, useEffect } from "react";
 import { COURSES_API } from "../index";
 import axios from "axios";
 import Quizzes from "./Quizzes";
+import QuizDetails from "./Quizzes/QuizDetails";
 
 function Courses() {
     const { courseId } = useParams();
-    const [course, setCourse] = useState<any>({_id: ""});
+    const [course, setCourse] = useState<any>({ _id: "" });
     const findCourseById = async () => {
         const resp = await axios.get(`${COURSES_API}/${courseId}`);
         if (resp.data === null) return;
@@ -22,7 +23,7 @@ function Courses() {
     useEffect(() => {
         findCourseById();
     }, [courseId]);
-    
+
     const page = useParams()['*'];
 
     return (
@@ -73,6 +74,7 @@ function Courses() {
                                                 <Route path="Home" element={<Home />} />
                                                 <Route path="Modules" element={<Modules />} />
                                                 <Route path="Quizzes" element={<Quizzes />} />
+                                                <Route path="Quizzes/Quiz Details" element={<QuizDetails />} />
                                                 <Route path="Piazza" element={<h1>Piazza</h1>} />
                                                 <Route path="Assignments" element={<Assignments />} />
                                                 <Route path="Assignments/:assignmentId" element={<h1>Assignment Editor</h1>} />

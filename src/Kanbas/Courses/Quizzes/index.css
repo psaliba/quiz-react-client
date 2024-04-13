@@ -1,0 +1,19 @@
+button {
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+    float: right;
+}
+
+.plus-button {
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.published-button {
+    background-color: green;
+    color: white;
+}
