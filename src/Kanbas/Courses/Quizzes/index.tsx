@@ -9,7 +9,7 @@ function Quizzes() {
             <div>
                 <button><FaEllipsisV /></button>
                 <Link to="Quiz Details">
-                    <button className='plus-button'>+ Quiz</button>
+                    <button className='red-button'>+ Quiz</button>
                 </Link>
             </div>
             <QuizzesList />

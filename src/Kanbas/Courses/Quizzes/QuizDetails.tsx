@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { setQuiz } from "./quizzesReducer";
 import { FaEllipsisV } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 
 function QuizDetails() {
@@ -30,7 +31,9 @@ function QuizDetails() {
             <h1>Quiz Details</h1>
             <div>
                 <button><FaEllipsisV /></button>
-                <button>Edit</button>
+                <Link to="../Quizzes/Quiz Editor">
+                    <button>Edit</button>
+                </Link>
                 <button>Preview</button>
                 <button className="published-button">Published</button>
             </div>
