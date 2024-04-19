@@ -40,7 +40,7 @@ function QuizEditor() {
     function Details() {
         return (
             <div>
-                Details
+                <h4>Details</h4>
                 <br></br>
                 <form>
                     <label>
@@ -49,11 +49,11 @@ function QuizEditor() {
                         <input type="text" name="title" />
                     </label>
                 </form>
-                <form id="noter-save-form" method="POST">
+                <form id="noter-save-form">
                     <label>
                         Description:
                         <br></br>
-                        <textarea id="noter-text-area" name="textarea" />
+                        <textarea id="description-text" name="description-text" />
                     </label>
                 </form>
                 <form>
@@ -163,9 +163,67 @@ function QuizEditor() {
     function Questions() {
         return (
             <div>
-                Questions
+                <h4>Questions</h4>
+                <br></br>
+                <button>+ New Question</button>
             </div>
         );
+    }
+
+    function Question() {
+        return (
+            <div>
+                <form>
+                    <label>
+                        Title:
+                        <input type="text" id="question-title" name="question-title" />
+                    </label>
+                    <label>
+                        Question type:
+                        <select id="question-type" name="question-type">
+                            <option value="multiple-choice">Multiple Choice</option>
+                            <option value="true-false">True/False</option>
+                            <option value="fill-in-blanks">Fill In The Blanks</option>
+                        </select>
+                    </label>
+                    <label>
+                        Points:
+                        <input type="number" id="points" name="points" min="0" max="100" />
+                    </label>
+                </form>
+            </div>
+        );
+    }
+
+    function MultipleChoice() {
+        <div>
+            <form id="noter-save-form">
+                <label>
+                    Question:
+                    <br></br>
+                    <textarea id="question-text" name="question-text" />
+                </label>
+            </form>
+            <button>+ Add Another Answer</button>
+        </div>
+    }
+
+    function MultipleChoiceAnswer() {
+        <div>
+            <form id="noter-save-form">
+                <label>
+                    Possible Answer:
+                    <textarea id="answer-text" name="answer-text" />
+                </label>
+                &nbsp;&nbsp;
+                <button>Delete</button>
+                &nbsp;&nbsp;
+                <label>
+                    Correct:
+                    <input type="checkbox" id="correct" name="correct" />
+                </label>
+            </form>
+        </div>
     }
 
     return (

@@ -13,7 +13,7 @@ button {
     padding-right: 10px;
 }
 
-.published-button {
+.green-button {
     background-color: green;
     color: white;
 }

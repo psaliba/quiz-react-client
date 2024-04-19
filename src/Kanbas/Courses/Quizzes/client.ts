@@ -1,4 +1,5 @@
 import axios from "axios";
+import { COURSES_API } from "../..";
 export const BASE_API = process.env.REACT_APP_API_BASE;
 export const QUIZZES_API = `${BASE_API}/api/quizzes`;
 
@@ -17,8 +18,8 @@ export const findQuizById = async (quizId: any) => {
     return response.data;
 }
 
-export const createQuiz = async (courseId: any, quiz: any) => {
-    const resp = await axios.post(`${QUIZZES_API}/${courseId}/quizzes`, quiz);
+export const createQuiz = async (quiz: any) => {
+    const resp = await axios.post(`${COURSES_API}`, quiz);
     return resp.data;
 };
 

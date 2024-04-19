@@ -21,9 +21,11 @@ export type Quiz = {
   available_until: Date;
   due: Date;
   quiz_type: string;
+  points: Number;
   assignment_group: string;
   shuffle_answers: boolean;
   time_limit: number;
+  multiple_attempts: boolean;
   show_correct_answers: string;
   access_code: string;
   one_question_at_a_time: boolean;

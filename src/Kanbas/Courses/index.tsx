@@ -95,7 +95,7 @@ function Courses() {
                         <Route path="Modules" element={<Modules />} />
                         <Route path="Quizzes" element={<Quizzes />} />
                         <Route
-                          path="Quizzes/Quiz Details/*"
+                          path="Quizzes/Quiz Details/:quizId"
                           element={<QuizDetails />}
                         />
                         <Route
