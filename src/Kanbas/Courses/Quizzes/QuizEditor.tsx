@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { setQuiz } from "./quizzesReducer";
 import { Link, useLocation } from "react-router-dom";
+import MultipleChoiceEditor from "./MultipleChoiceEditor";
 
 function QuizEditor() {
     const dispatch = useDispatch();
@@ -166,6 +167,7 @@ function QuizEditor() {
                 <h4>Questions</h4>
                 <br></br>
                 <button>+ New Question</button>
+                <MultipleChoiceEditor></MultipleChoiceEditor>
             </div>
         );
     }

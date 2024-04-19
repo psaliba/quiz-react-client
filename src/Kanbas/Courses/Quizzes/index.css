@@ -17,3 +17,13 @@ button {
     background-color: green;
     color: white;
 }
+
+.answer-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.lazy-button-fix {
+    float: left;
+}
