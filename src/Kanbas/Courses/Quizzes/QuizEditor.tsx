@@ -211,6 +211,7 @@ function QuizEditor() {
             
                 </form>
                 <button>+ Add Another Answer</button>
+                <h5>Answer:</h5>
                 {questionType === 'multiple-choice' && <MultipleChoice />}
                 {questionType === 'true-false' && <TrueFalse />}
                 {questionType === 'fill-in-blanks' && <FillInBlanks />}
@@ -230,8 +231,24 @@ function QuizEditor() {
 
     function TrueFalse() {
         return (
-            <div>
-                True False placeholder
+            <div className="answer-container">
+                <div className="answer-container">
+                    <div className="tf-container me-2">
+                        <label> True <br /><input
+                            className="ms-2"
+                            type="radio"
+                            name="tf"
+                            /></label>
+                    </div>
+                    <div className="tf-container me-2">
+                        <label> False <br /><input
+                            type="radio"
+                            className="ms-2"
+                            name="tf"
+                            /></label>
+                            
+                    </div>
+                </div>
             </div>
         );
     }

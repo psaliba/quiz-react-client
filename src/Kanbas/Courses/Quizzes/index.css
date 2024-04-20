@@ -43,3 +43,10 @@ select{
     margin-left: 8px;
     margin-right: 8px;
 }
+
+.tf-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
