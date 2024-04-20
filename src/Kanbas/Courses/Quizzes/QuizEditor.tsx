@@ -10,7 +10,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
     FaTrash,
 } from "react-icons/fa";
-import MultipleChoiceEditor from "./MultipleChoiceEditor";
 
 function QuizEditor() {
     const dispatch = useDispatch();
