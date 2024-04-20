@@ -210,7 +210,7 @@ function QuizEditor() {
                     </label>
             
                 </form>
-                <button>+ Add Another Answer</button>
+                {questionType !== 'true-false' && <button>+ Add Another Answer</button>}
                 <h5>Answer:</h5>
                 {questionType === 'multiple-choice' && <MultipleChoice />}
                 {questionType === 'true-false' && <TrueFalse />}
