@@ -1,12 +1,15 @@
 
 import "../index.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as client from "./client";
 import { Navigate, Route, Routes, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { KanbasState } from "../../store";
 import { setQuiz } from "./quizzesReducer";
 import { Link, useLocation } from "react-router-dom";
+import {
+    FaTrash,
+} from "react-icons/fa";
 import MultipleChoiceEditor from "./MultipleChoiceEditor";
 
 function QuizEditor() {
@@ -167,22 +170,25 @@ function QuizEditor() {
                 <h4>Questions</h4>
                 <br></br>
                 <button>+ New Question</button>
-                <MultipleChoiceEditor></MultipleChoiceEditor>
+                <Question></Question>
             </div>
         );
     }
 
     function Question() {
+        const [questionType, setQuestionType] = useState('multiple-choice');
+    
+        const handleQuestionTypeChange = (event: any) => {
+            setQuestionType(event.target.value);
+        };
+    
         return (
             <div>
                 <form>
+                    <input type="text" id="question-title" name="question-title" placeholder="Question Title"/>
                     <label>
-                        Title:
-                        <input type="text" id="question-title" name="question-title" />
-                    </label>
-                    <label>
-                        Question type:
-                        <select id="question-type" name="question-type">
+                        Question Type: 
+                        <select id="question-type" name="question-type" onChange={handleQuestionTypeChange}>
                             <option value="multiple-choice">Multiple Choice</option>
                             <option value="true-false">True/False</option>
                             <option value="fill-in-blanks">Fill In The Blanks</option>
@@ -190,42 +196,72 @@ function QuizEditor() {
                     </label>
                     <label>
                         Points:
-                        <input type="number" id="points" name="points" min="0" max="100" />
+                        <input className="ms-2" type="number" id="points" name="points" min="0" max="100" />
                     </label>
+                    <br /><br />
+                    <p>Enter your question and multiple answers, then select the one correct answer.</p>
+                    <label>
+                        <h5>Question:</h5>
+                        <textarea
+                            id="myTextarea"
+                            placeholder="Type your question here."
+                            rows={4}
+                            cols={50}
+                        />
+                    </label>
+            
                 </form>
+                <button>+ Add Another Answer</button>
+                {questionType === 'multiple-choice' && <MultipleChoice />}
+                {questionType === 'true-false' && <TrueFalse />}
+                {questionType === 'fill-in-blanks' && <FillInBlanks />}
+                <button className="lazy-button-fix mt-2">Cancel</button>
+                <button className="lazy-button-fix mt-2">Update Question</button>
             </div>
         );
     }
 
     function MultipleChoice() {
-        <div>
-            <form id="noter-save-form">
-                <label>
-                    Question:
-                    <br></br>
-                    <textarea id="question-text" name="question-text" />
-                </label>
-            </form>
-            <button>+ Add Another Answer</button>
-        </div>
+        return (
+            <div>
+                <MultipleChoiceAnswer></MultipleChoiceAnswer>
+            </div>
+        );
+    }
+
+    function TrueFalse() {
+        return (
+            <div>
+                True False placeholder
+            </div>
+        );
+    }
+
+    function FillInBlanks() {
+        return (
+            <div>
+                Fill in blanks placeholder
+            </div>
+        );
     }
 
     function MultipleChoiceAnswer() {
-        <div>
-            <form id="noter-save-form">
-                <label>
-                    Possible Answer:
-                    <textarea id="answer-text" name="answer-text" />
-                </label>
-                &nbsp;&nbsp;
-                <button>Delete</button>
-                &nbsp;&nbsp;
-                <label>
-                    Correct:
-                    <input type="checkbox" id="correct" name="correct" />
-                </label>
-            </form>
-        </div>
+        return(
+            <div className="answer-container">
+                <input
+                    className="me-3"
+                    type="radio"
+                    name="mc-option"
+                    />
+                <textarea
+                id="myTextarea"
+                placeholder="Type your answer here."
+                rows={2}
+                cols={50}
+                />
+                <FaTrash className="trash-icon"></FaTrash>
+            </div>
+        );
     }
 
     return (
