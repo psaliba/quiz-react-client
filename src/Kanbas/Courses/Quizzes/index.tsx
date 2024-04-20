@@ -1,18 +1,20 @@
 import { FaEllipsisV } from "react-icons/fa";
 import QuizzesList from "./QuizzesList";
 import "./index.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as client from "./client";
+import { useState } from "react";
+import { Quiz } from "../../Database";
 
 function Quizzes() {
 
   const navigate = useNavigate();
-
   const { courseId } = useParams();
+  const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
   const handleCreateQuiz = () => {
     const quiz = {
-      _id: "0",
+      _id: "",
       course_id: courseId as string,
       title: "New Quiz",
       published: false,
@@ -32,10 +34,8 @@ function Quizzes() {
       lock_questions_after_answering: false,
       questions: []
     }
-    client.createQuiz(quiz).then((newQuiz) => {
-      client.createQuiz(newQuiz);
-      navigate("Quiz Details/0");
-    });
+    client.createQuiz(quiz);
+    //navigate("Quiz Details/" + newQuiz._id);
   };
 
   return (

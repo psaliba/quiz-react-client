@@ -28,7 +28,7 @@ button {
     float: left;
 }
 
-.trash-icon{
+.trash-icon {
     color: grey;
     margin-left: 8px;
     font-size: 20px;
@@ -39,14 +39,18 @@ input {
     margin-right: 8px
 }
 
-select{
+select {
     margin-left: 8px;
     margin-right: 8px;
 }
 
-.tf-container{
+.tf-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-items: center;
+}
+
+.description {
+    height: 200px
 }

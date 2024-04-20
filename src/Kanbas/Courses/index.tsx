@@ -99,7 +99,7 @@ function Courses() {
                           element={<QuizDetails />}
                         />
                         <Route
-                          path="Quizzes/Quiz Editor/*"
+                          path="Quizzes/Quiz Editor/:quizId/*"
                           element={<QuizEditor />}
                         />
                         <Route path="Piazza" element={<h1>Piazza</h1>} />

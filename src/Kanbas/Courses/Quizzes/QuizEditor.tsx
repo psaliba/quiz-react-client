@@ -2,30 +2,60 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import * as client from "./client";
-import { Navigate, Route, Routes, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { KanbasState } from "../../store";
-import { setQuiz } from "./quizzesReducer";
+import { Navigate, Route, Routes, useNavigate, useParams } from "react-router";
 import { Link, useLocation } from "react-router-dom";
 import {
     FaTrash,
 } from "react-icons/fa";
+import { Quiz } from "../../Database";
 
 function QuizEditor() {
-    const dispatch = useDispatch();
-
     const { quizId } = useParams();
+    const navigate = useNavigate();
+
+    const [quiz, setQuiz] = useState<Quiz>(
+        {
+            _id: "0",
+            course_id: "",
+            title: "New Quiz",
+            description: "",
+            published: false,
+            available: new Date(),
+            available_until: new Date(),
+            due: new Date(),
+            quiz_type: "Graded Quiz",
+            points: 0,
+            assignment_group: "Quizzes",
+            shuffle_answers: false,
+            time_limit: 20,
+            multiple_attempts: false,
+            show_correct_answers: "After Submitted",
+            access_code: "",
+            one_question_at_a_time: true,
+            webcam_required: false,
+            lock_questions_after_answering: false,
+            questions: []
+        }
+    );
 
     useEffect(() => {
         if (quizId) {
             client.findQuizById(quizId).then((quiz) => {
-                dispatch(setQuiz(quiz));
+                setQuiz(quiz);
             });
         }
-    }, [quizId, dispatch]);
+    }, [quizId]);
 
-    const quiz = useSelector((state: KanbasState) =>
-        state.quizzesReducer.quiz);
+    const handleSave = async (quiz: Quiz) => {
+        await client.updateQuiz(quiz);
+        navigate("../Quizzes/Quiz Details/" + quizId)
+    };
+
+    const handleSaveAndPublish = async (quiz: Quiz) => {
+        quiz.published = true;
+        await client.updateQuiz(quiz);
+        navigate("../Quizzes")
+    };
 
     const { pathname } = useLocation();
 
@@ -49,21 +79,24 @@ function QuizEditor() {
                     <label>
                         Title:
                         <br></br>
-                        <input type="text" name="title" />
+                        <input type="text" name="title" value={quiz.title}
+                            onChange={(e) => setQuiz({ ...quiz, title: e.target.value })} />
                     </label>
                 </form>
-                <form id="noter-save-form">
+                <form>
                     <label>
                         Description:
                         <br></br>
-                        <textarea id="description-text" name="description-text" />
+                        <input type="text" name="description" className="description" value={quiz.description}
+                            onChange={(e) => setQuiz({ ...quiz, description: e.target.value })} />
                     </label>
                 </form>
                 <form>
                     <label>
                         Quiz Type:
                         <br></br>
-                        <select id="quiz-type" name="quiz-type">
+                        <select id="quiz-type" name="quiz-type" value={quiz.quiz_type}
+                            onChange={(e) => setQuiz({ ...quiz, quiz_type: e.target.value })} >
                             <option value="graded-quiz">Graded Quiz</option>
                             <option value="practice-quiz">Practice Quiz</option>
                             <option value="graded-survey">Graded Survey</option>
@@ -73,13 +106,15 @@ function QuizEditor() {
                     <br></br><br></br>
                     <label>
                         Points:
-                        <input type="number" id="points" name="points" min="0" max="100" />
+                        <input type="number" id="points" name="points" min="0" max="100" value={String(quiz.points)}
+                            onChange={(e) => setQuiz({ ...quiz, points: Number(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Assignment Group:
                         <br></br>
-                        <select id="assignment-group" name="assignment-group">
+                        <select id="assignment-group" name="assignment-group" value={quiz.assignment_group}
+                            onChange={(e) => setQuiz({ ...quiz, assignment_group: e.target.value })} >
                             <option value="quizzes">Quizzes</option>
                             <option value="exams">Exams</option>
                             <option value="assignment">Assignment</option>
@@ -89,72 +124,79 @@ function QuizEditor() {
                     <br></br><br></br>
                     <label>
                         Shuffle answers:
-                        <input type="checkbox" id="shuffle-answers" name="shuffle-answers" />
+                        <input type="checkbox" checked={quiz.shuffle_answers} id="shuffle-answers" name="shuffle-answers"
+                            onChange={(e) => setQuiz({ ...quiz, shuffle_answers: Boolean(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
-                        Time limit:
-                        <input type="checkbox" id="time-limit" name="time-limit" checked />
-                    </label>
-                    &nbsp;&nbsp;
-                    <label>
-                        Limit
-                        <input type="number" id="limit" name="limit" min="1" value="20" />
+                        Time Limit
+                        <input type="number" id="limit" name="limit" min="1" value={String(quiz.time_limit)}
+                            onChange={(e) => setQuiz({ ...quiz, time_limit: Number(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Allow multiple attempts:
-                        <input type="checkbox" id="multiple-attempts" name="multiple-attempts" />
+                        <input type="checkbox" checked={quiz.multiple_attempts} id="multiple-attempts" name="multiple-attempts"
+                            onChange={(e) => setQuiz({ ...quiz, multiple_attempts: Boolean(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Show correct answers:
-                        <input type="checkbox" id="show-correct-answers" name="show-correct-answers" />
+                        <br></br>
+                        <select id="show-correct-answers" name="show-correct-answers" value={quiz.show_correct_answers}
+                            onChange={(e) => setQuiz({ ...quiz, show_correct_answers: e.target.value })} >
+                            <option value="Immediately">Immedidately</option>
+                            <option value="After-Submitted">After Submitted</option>
+                            <option value="Never">Never</option>
+                        </select>
                     </label>
                     <br></br><br></br>
                     <label>
                         Access code:
                         <br></br>
-                        <input type="text" name="access-code" />
+                        <input type="text" name="access-code" value={quiz.access_code}
+                            onChange={(e) => setQuiz({ ...quiz, access_code: e.target.value })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         One question at a time:
-                        <input type="checkbox" id="one-question" name="one-question" checked />
+                        <input type="checkbox" checked={quiz.one_question_at_a_time} id="one-question" name="one-question"
+                            onChange={(e) => setQuiz({ ...quiz, one_question_at_a_time: Boolean(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Webcam required:
-                        <input type="checkbox" id="webcame" name="webcame" />
+                        <input type="checkbox" checked={quiz.webcam_required} id="webcam" name="webcam"
+                            onChange={(e) => setQuiz({ ...quiz, webcam_required: Boolean(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Lock questions after answering:
-                        <input type="checkbox" id="lock-questions" name="lock-questions" />
+                        <input type="checkbox" checked={quiz.lock_questions_after_answering} id="lock-questions" name="lock-questions"
+                            onChange={(e) => setQuiz({ ...quiz, lock_questions_after_answering: Boolean(e.target.value) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Due date:
-                        <input type="date" id="due-date" name="due-date" />
+                        <input type="date" id="due-date" name="due-date" value={String(quiz.due)}
+                            onChange={(e) => setQuiz({ ...quiz, due: new Date(Date.parse(e.target.value)) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Available date:
-                        <input type="date" id="available-date" name="available-date" />
+                        <input type="date" id="available-date" name="available-date" value={String(quiz.available)}
+                            onChange={(e) => setQuiz({ ...quiz, available: new Date(Date.parse(e.target.value)) })} />
                     </label>
                     <br></br><br></br>
                     <label>
                         Until date:
-                        <input type="date" id="until-date" name="until-date" />
+                        <input type="date" id="until-date" name="until-date" value={String(quiz.available_until)}
+                            onChange={(e) => setQuiz({ ...quiz, available_until: new Date(Date.parse(e.target.value)) })} />
                     </label>
                 </form>
                 <br></br><br></br>
-                <Link to={"../../Quizzes/Quiz Details"}>
-                    <button className="red-button">Save</button>
-                </Link>
-                <Link to={"../../Quizzes"}>
-                    <button>Save & Publish</button>
-                </Link>
+                <button onClick={() => handleSave(quiz)} className="red-button">Save</button>
+                <button onClick={() => handleSaveAndPublish(quiz)}>Save & Publish</button>
                 <Link to={"../../Quizzes"}>
                     <button>Cancel</button>
                 </Link>
@@ -176,17 +218,17 @@ function QuizEditor() {
 
     function Question() {
         const [questionType, setQuestionType] = useState('multiple-choice');
-    
+
         const handleQuestionTypeChange = (event: any) => {
             setQuestionType(event.target.value);
         };
-    
+
         return (
             <div>
                 <form>
-                    <input type="text" id="question-title" name="question-title" placeholder="Question Title"/>
+                    <input type="text" id="question-title" name="question-title" placeholder="Question Title" />
                     <label>
-                        Question Type: 
+                        Question Type:
                         <select id="question-type" name="question-type" onChange={handleQuestionTypeChange}>
                             <option value="multiple-choice">Multiple Choice</option>
                             <option value="true-false">True/False</option>
@@ -208,7 +250,7 @@ function QuizEditor() {
                             cols={50}
                         />
                     </label>
-            
+
                 </form>
                 {questionType !== 'true-false' && <button>+ Add Another Answer</button>}
                 <h5>Answer:</h5>
@@ -238,15 +280,15 @@ function QuizEditor() {
                             className="ms-2"
                             type="radio"
                             name="tf"
-                            /></label>
+                        /></label>
                     </div>
                     <div className="tf-container me-2">
                         <label> False <br /><input
                             type="radio"
                             className="ms-2"
                             name="tf"
-                            /></label>
-                            
+                        /></label>
+
                     </div>
                 </div>
             </div>
@@ -262,18 +304,18 @@ function QuizEditor() {
     }
 
     function MultipleChoiceAnswer() {
-        return(
+        return (
             <div className="answer-container">
                 <input
                     className="me-3"
                     type="radio"
                     name="mc-option"
-                    />
+                />
                 <textarea
-                id="myTextarea"
-                placeholder="Type your answer here."
-                rows={2}
-                cols={50}
+                    id="myTextarea"
+                    placeholder="Type your answer here."
+                    rows={2}
+                    cols={50}
                 />
                 <FaTrash className="trash-icon"></FaTrash>
             </div>

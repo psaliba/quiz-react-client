@@ -16,6 +16,7 @@ export type Quiz = {
   _id: string;
   course_id: string;
   title: string;
+  description: string;
   published: boolean;
   available: Date;
   available_until: Date;

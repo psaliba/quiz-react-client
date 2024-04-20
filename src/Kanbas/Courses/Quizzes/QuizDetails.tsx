@@ -2,7 +2,7 @@
 import "../index.css";
 import { useEffect, useState } from "react";
 import * as client from "./client";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
 import { FaEllipsisV } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -14,11 +14,14 @@ function QuizDetails() {
 
     const { courseId, quizId } = useParams();
 
+    const navigate = useNavigate();
+
     const [quiz, setQuiz] = useState<Quiz>(
         {
             _id: "0",
             course_id: courseId as string,
             title: "New Quiz",
+            description: "",
             published: false,
             available: new Date(),
             available_until: new Date(),
@@ -39,8 +42,6 @@ function QuizDetails() {
     );
 
     useEffect(() => {
-        console.log("courseId: " + courseId)
-        console.log("quizId: " + quizId)
         if (quizId) {
             client.findQuizById(quizId).then((quiz) => {
                 setQuiz(quiz);
@@ -49,20 +50,21 @@ function QuizDetails() {
     }, [quizId, dispatch]);
 
     const handlePublishQuiz = async (quiz: Quiz) => {
-        console.log("publishing quiz");
         quiz.published = !quiz.published;
         setQuiz(quiz);
         await client.updateQuiz(quiz);
     };
+
+    const handleGoToEditor = () => {
+        navigate("../Quizzes/Quiz Editor/" + quiz._id)
+    }
 
     return (
         <div>
             <h1>Quiz Details</h1>
             <div>
                 <button><FaEllipsisV /></button>
-                <Link to="../Quizzes/Quiz Editor">
-                    <button>Edit</button>
-                </Link>
+                <button onClick={handleGoToEditor}>Edit</button>
                 <button>Preview</button>
                 <button
                     className="green-button"
