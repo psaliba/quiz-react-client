@@ -3,14 +3,10 @@ import "../index.css";
 import { useEffect, useState } from "react";
 import * as client from "./client";
 import { useNavigate, useParams } from "react-router";
-import { useDispatch } from "react-redux";
-import { FaEllipsisV } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { Quiz } from "../../Database";
 
 
 function QuizDetails() {
-    const dispatch = useDispatch();
 
     const { courseId, quizId } = useParams();
 
@@ -47,25 +43,42 @@ function QuizDetails() {
                 setQuiz(quiz);
             });
         }
-    }, [quizId, dispatch]);
+    }, [quizId]);
 
     const handlePublishQuiz = async (quiz: Quiz) => {
+        console.log("toggle publish quiz");
         quiz.published = !quiz.published;
-        setQuiz(quiz);
         await client.updateQuiz(quiz);
+        client.findQuizById(quizId).then((quiz) => {
+            setQuiz(quiz);
+        });
     };
 
     const handleGoToEditor = () => {
         navigate("../Quizzes/Quiz Editor/" + quiz._id)
     }
 
+    const handleGoToPreview = () => {
+        navigate("../Quizzes/Quiz Preview/" + quiz._id)
+    }
+
+    function boolToString(b: boolean): string {
+        if (b) {
+            return "Yes";
+        }
+        return "No";
+    }
+
+    var due = new Date(quiz.due);
+    var available = new Date(quiz.available);
+    var available_until = new Date(quiz.available_until);
+
     return (
         <div>
             <h1>Quiz Details</h1>
             <div>
-                <button><FaEllipsisV /></button>
                 <button onClick={handleGoToEditor}>Edit</button>
-                <button>Preview</button>
+                <button onClick={handleGoToPreview}>Preview</button>
                 <button
                     className="green-button"
                     onClick={() => handlePublishQuiz(quiz)}>
@@ -87,7 +100,7 @@ function QuizDetails() {
                 </tr>
                 <tr>
                     <td><strong>Shuffle Answers</strong></td>
-                    <td>{String(quiz.shuffle_answers)}</td>
+                    <td>{boolToString(quiz.shuffle_answers)}</td>
                 </tr>
                 <tr>
                     <td><strong>Time Limit</strong></td>
@@ -95,7 +108,7 @@ function QuizDetails() {
                 </tr>
                 <tr>
                     <td><strong>Multiple Attempts</strong></td>
-                    <td>{String(quiz.multiple_attempts)}</td>
+                    <td>{boolToString(quiz.multiple_attempts)}</td>
                 </tr>
                 <tr>
                     <td><strong>Show Correct Answers</strong></td>
@@ -107,27 +120,27 @@ function QuizDetails() {
                 </tr>
                 <tr>
                     <td><strong>One Question at a Time</strong></td>
-                    <td>{String(quiz.one_question_at_a_time)}</td>
+                    <td>{boolToString(quiz.one_question_at_a_time)}</td>
                 </tr>
                 <tr>
                     <td><strong>Webcam Required</strong></td>
-                    <td>{String(quiz.webcam_required)}</td>
+                    <td>{boolToString(quiz.webcam_required)}</td>
                 </tr>
                 <tr>
                     <td><strong>Lock Questions After Answering</strong></td>
-                    <td>{String(quiz.lock_questions_after_answering)}</td>
+                    <td>{boolToString(quiz.lock_questions_after_answering)}</td>
                 </tr>
                 <tr>
                     <td><strong>Due date</strong></td>
-                    <td>{String(quiz.due)}</td>
+                    <td>{due.toDateString()}</td>
                 </tr>
                 <tr>
                     <td><strong>Available date</strong></td>
-                    <td>{String(quiz.available)}</td>
+                    <td>{available.toDateString()}</td>
                 </tr>
                 <tr>
                     <td><strong>Until date</strong></td>
-                    <td>{String(quiz.available_until)}</td>
+                    <td>{available_until.toDateString()}</td>
                 </tr>
             </table>
         </div>

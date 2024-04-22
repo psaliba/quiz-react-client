@@ -12,7 +12,7 @@ function Quizzes() {
   const { courseId } = useParams();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
 
-  const handleCreateQuiz = () => {
+  const handleCreateQuiz = async () => {
     const quiz = {
       _id: "",
       course_id: courseId as string,
@@ -34,8 +34,8 @@ function Quizzes() {
       lock_questions_after_answering: false,
       questions: []
     }
-    client.createQuiz(quiz);
-    //navigate("Quiz Details/" + newQuiz._id);
+    await client.createQuiz(quiz);
+    navigate("Quiz Details/" + quiz._id);
   };
 
   return (
