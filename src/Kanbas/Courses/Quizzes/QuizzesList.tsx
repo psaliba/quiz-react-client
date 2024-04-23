@@ -94,7 +94,10 @@ function QuizzesList() {
           </div>
         </div>
         <div>
-          <button className="btn btn-link p-0">
+          <button
+            className="btn btn-link p-0"
+            onClick={() => togglePublishQuiz(quiz)}
+          >
             {quiz.published ? (
               <FaCheckCircle className="text-success" />
             ) : (
