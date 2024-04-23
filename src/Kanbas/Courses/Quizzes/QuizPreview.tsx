@@ -3,14 +3,7 @@ import "./index.css";
 import { Question, Quiz } from "../../Database";
 import { useParams } from "react-router";
 import * as client from "./client";
-import {
-  FaCircle,
-  FaDotCircle,
-  FaExclamation,
-  FaPencilAlt,
-  FaRegCircle,
-} from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaExclamation, FaPencilAlt, FaRegCircle } from "react-icons/fa";
 
 function QuizPreview() {
   const [quiz, setQuiz] = useState<Quiz>();
@@ -35,8 +28,6 @@ function QuizPreview() {
 
     return question;
   };
-
-  console.log(quiz);
 
   return (
     <div>

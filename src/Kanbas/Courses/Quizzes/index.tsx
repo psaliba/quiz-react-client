@@ -7,7 +7,6 @@ import { useState } from "react";
 import { Quiz } from "../../Database";
 
 function Quizzes() {
-
   const navigate = useNavigate();
   const { courseId } = useParams();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
@@ -31,16 +30,17 @@ function Quizzes() {
     one_question_at_a_time: true,
     webcam_required: false,
     lock_questions_after_answering: false,
-    questions: []
-  }
+    questions: [],
+  };
 
   const handleCreateQuiz = async () => {
-    await client.createQuiz(quiz); //await seems to not be working?
-    client.findAllQuizzes(courseId).then((quizzes) => {
-      setQuizzes(quizzes);
-    });
-    const newQuiz = quizzes.find((currQuiz) => (currQuiz.title === quiz.title)) as Quiz
-    navigate("/Quiz Details/" + newQuiz._id)
+    await client.createQuiz(quiz);
+    const quizzes = await client.findAllQuizzes(courseId);
+    setQuizzes(quizzes);
+    const newQuiz = quizzes.find(
+      (currQuiz: { title: string }) => currQuiz.title === quiz.title
+    ) as Quiz;
+    navigate("../Quizzes/Quiz Details/" + newQuiz._id);
   };
 
   return (
@@ -49,10 +49,9 @@ function Quizzes() {
         <button>
           <FaEllipsisV />
         </button>
-        <button
-          className="red-button"
-          onClick={handleCreateQuiz}
-        >+ Quiz</button>
+        <button className="red-button" onClick={handleCreateQuiz}>
+          + Quiz
+        </button>
       </div>
       <QuizzesList />
     </div>
