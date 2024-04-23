@@ -41,7 +41,6 @@ function QuizDetails() {
   }, [quizId]);
 
   const handlePublishQuiz = async (quiz: Quiz) => {
-    console.log("toggle publish quiz");
     quiz.published = !quiz.published;
     await client.updateQuiz(quiz);
     client.findQuizById(quizId).then((quiz) => {

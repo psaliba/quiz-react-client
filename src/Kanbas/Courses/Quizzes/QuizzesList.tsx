@@ -11,8 +11,6 @@ import { Link } from "react-router-dom";
 function QuizzesList() {
   const { courseId } = useParams();
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
-  //   const { courseId } = useParams();
-  console.log("sammy" + JSON.stringify(courseId));
 
   useEffect(() => {
     // fetch quizzes
@@ -29,7 +27,6 @@ function QuizzesList() {
   };
 
   const togglePublishQuiz = async (quiz: Quiz) => {
-    console.log("toggle publish quiz");
     quiz.published = !quiz.published;
     await client.updateQuiz(quiz);
 
@@ -73,7 +70,6 @@ function QuizzesList() {
       </OverlayTrigger>
     );
   };
-  console.log("quizzes", quizzes);
 
   const renderAQuiz = (quiz: Quiz) => {
     const quizSubDetails = () => {
