@@ -74,7 +74,26 @@ function QuizzesList() {
     );
   };
   console.log("quizzes", quizzes);
+
   const renderAQuiz = (quiz: Quiz) => {
+    const quizSubDetails = () => {
+      const currentDate = new Date();
+      const availableDate = new Date(quiz.available);
+      const isAvailable = currentDate >= availableDate;
+
+      // Formatting the date
+      const formattedDate = availableDate.toLocaleDateString();
+
+      return (
+        <div>
+          {isAvailable
+            ? `Available ${formattedDate} | `
+            : `Not available until ${formattedDate}`}{" "}
+          {`Due Date: ${new Date(quiz.due).toLocaleDateString()} | `}
+          {quiz.points.toString()} points | {quiz.questions.length} Questions
+        </div>
+      );
+    };
     return (
       <li
         className="list-group-item d-flex align-items-center justify-content-between"
@@ -87,11 +106,7 @@ function QuizzesList() {
               <strong>{quiz.title}</strong>
             </div>
           </Link>
-          <div>
-            {`Available ${new Date(quiz.available).toLocaleDateString()} | `}
-            {`Due Date: ${new Date(quiz.due).toLocaleDateString()} | `}
-            {quiz.questions.length} Questions
-          </div>
+          <div>{quizSubDetails()}</div>
         </div>
         <div>
           <button
