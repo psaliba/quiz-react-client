@@ -38,7 +38,7 @@ export type Quiz = {
 export type Question = {
   type: string;
   points: number;
-  quetion: string;
+  question: string;
   options: Option[];
   correct_option: number;
 };

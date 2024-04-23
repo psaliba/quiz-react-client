@@ -17,7 +17,6 @@ function Courses() {
   const { courseId } = useParams();
   const [course, setCourse] = useState<any>({ _id: "" });
   const findCourseById = async () => {
-    console.log("ryan " + courseId);
     const resp = await axios.get(`${COURSES_API}/${courseId}`);
     if (resp.data === null) return;
     setCourse(resp.data);
@@ -28,8 +27,6 @@ function Courses() {
   }, [courseId]);
 
   const page = useParams()["*"];
-
-  console.log("what is this course id fuck thisn" + courseId);
 
   return (
     <div>
