@@ -36,6 +36,7 @@ export type Quiz = {
 };
 
 export type Question = {
+  title: string;
   type: string;
   points: number;
   question: string;

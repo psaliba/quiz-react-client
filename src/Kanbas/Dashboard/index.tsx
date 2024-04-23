@@ -37,7 +37,7 @@ function Dashboard({
               className="form-control"
               onChange={(e) => setCourse({ ...course, number: e.target.value })}
             />
-            <input
+            {/* <input
               value={course.startDate.slice(0, 10)}
               className="form-control"
               onChange={(e) =>
@@ -52,7 +52,7 @@ function Dashboard({
                 setCourse({ ...course, endDate: e.target.value })
               }
               type="date"
-            />
+            /> */}
 
             <button className="btn btn-primary" onClick={addCourse}>
               Add Course
@@ -100,7 +100,7 @@ function Dashboard({
                             >
                               {course.name} ({course.number})
                             </div>
-                            <p className="card-text">{`From ${course.startDate.slice(0, 10)} to ${course.endDate.slice(0, 10)}`}</p>
+                            {/* <p className="card-text">{`From ${course.startDate.slice(0, 10)} to ${course.endDate.slice(0, 10)}`}</p> */}
                             <div className="btn btn-primary"> Go </div>
                             <span> </span>
                             <div
