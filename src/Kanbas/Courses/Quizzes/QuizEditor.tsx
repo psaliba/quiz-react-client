@@ -276,7 +276,7 @@ function QuizEditor() {
           <label>
             Due date:
             <input
-              type="date"
+              type="datetime-local"
               id="due-date"
               className="ms-2"
               name="due-date"
@@ -290,7 +290,7 @@ function QuizEditor() {
           <label>
             Available date:
             <input
-              type="date"
+              type="datetime-local"
               id="available-date"
               name="available-date"
               className="ms-2"
@@ -306,7 +306,7 @@ function QuizEditor() {
           <label>
             Until date:
             <input
-              type="date"
+              type="datetime-local"
               id="until-date"
               name="until-date"
               className="ms-2"
