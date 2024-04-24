@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as client from "./client";
 import { useNavigate, useParams } from "react-router";
 import { Quiz } from "../../Database";
+import { FaPencilAlt } from "react-icons/fa";
 
 function QuizDetails() {
   const { courseId, quizId } = useParams();
@@ -71,7 +72,7 @@ function QuizDetails() {
     <div className="ms-3">
       <h1>Quiz Details</h1>
       <div>
-        <button className="grey-button" onClick={handleGoToEditor}>Edit</button>
+        <button className="grey-button" onClick={handleGoToEditor}><FaPencilAlt className="me-1"></FaPencilAlt>Edit</button>
         <button className="grey-button" onClick={handleGoToPreview}>Preview</button>
         <button
           className="green-button"

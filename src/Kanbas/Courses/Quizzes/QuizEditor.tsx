@@ -30,15 +30,15 @@ function QuizEditor() {
       <nav className="nav nav-tabs mt-2">
         <Link
           to="Details"
-          className={`nav-link ${pathname.includes("details") ? "active" : ""}`}
+          className={`nav-link ${pathname.includes("Details") ? "active" : ""}`}
+          style={{ color: "#b3292e" }}
         >
           Details
         </Link>
         <Link
           to="Questions"
-          className={`nav-link ${
-            pathname.includes("questions") ? "active" : ""
-          }`}
+          className={`nav-link ${pathname.includes("Questions") ? "active" : ""}`}
+          style={{ color: "#b3292e" }}
         >
           Questions
         </Link>
@@ -77,7 +77,7 @@ function QuizEditor() {
     }, []);
 
     return (
-      <div>
+      <div className="ms-3 mt-2">
         <h1>Details</h1>
         <form>
           <label>
@@ -303,7 +303,6 @@ function QuizEditor() {
               }
             />
           </label>
-          <br></br>
           <label>
             Until date:
             <input
@@ -376,43 +375,59 @@ function QuizEditor() {
     };
 
     return (
-      <div>
-        <h4>
-          Questions <button>+ Question</button>
-        </h4>
-        <br></br>
-
+      <div className="ms-3 mt-2">
+        <div >
+          <h1
+            style={{
+              display: "inline-block",
+            }}>
+            Questions
+          </h1>
+          <button className="red-button mt-1">+ Question</button>
+        </div>
         {quiz.questions.map((question, index) => (
           <div
             style={{
               border: "1px solid gray",
               padding: "10px",
+              borderRadius: "4px",
               marginBottom: "10px",
             }}
-          >
-            <h5>
-              Question Number: {index + 1}{" "}
-              <button onClick={() => goToQuestionEditor(index)}>edit</button>
-            </h5>
-            <p>Title: {question.title}</p>
-            <p>Question: <span dangerouslySetInnerHTML={{ __html: question.question }} /></p>
-            <p>Points: {question.points}</p>
-            <p>Type: {question.type}</p>
+          > 
+            <h4
+              style={{
+                display: "inline-block",
+              }}>
+              <strong>
+              Question {index + 1}{" "}
+              </strong>
+            </h4>
+            <button onClick={() => goToQuestionEditor(index)}>Edit Question</button>
+            <p><strong>Title:</strong> {question.title}</p>
+            <p><strong>Question:</strong> <span dangerouslySetInnerHTML={{ __html: question.question }} /></p>
+            <p><strong>Points:</strong> {question.points}</p>
+            <p><strong>Type:</strong> {question.type}</p>
+            <h5><strong>Answers:</strong></h5>
             {question.options.map((option, optionIndex) => (
-              <div
-                style={{
-                  border: "1px solid lightgray",
-                  padding: "5px",
-                  marginTop: "5px",
-                }}
-              >
-                <p>
-                  Option {optionIndex + 1}: {option.toString()}
+                <p
+                  style={{
+                    margin: "8px",
+                  }}>
+                  <strong>Option {optionIndex + 1}</strong>: {option.toString()}
                 </p>
-              </div>
             ))}
           </div>
         ))}
+        <button onClick={() => handleSave(quiz)} className="red-button">
+          Save
+        </button>
+        <button onClick={() => handleSaveAndPublish(quiz)}>
+          Save & Publish
+        </button>
+        <Link to={"../../Quizzes"}>
+          <button>Cancel</button>
+        </Link>
+        <br /><br />
       </div>
     );
   }
