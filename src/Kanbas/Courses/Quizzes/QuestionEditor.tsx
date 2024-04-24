@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 import { useParams } from "react-router";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 import { Question, Option, Quiz } from "../../Database";
 import * as client from "./client";
 import { FaTrash } from "react-icons/fa";
@@ -151,16 +153,11 @@ function QuestionEditor() {
         </p>
         <label>
           <h5>Question:</h5>
-          <textarea
-            id="myTextarea"
-            placeholder="Type your question here."
+          <ReactQuill
+            theme="snow"
             value={question.question}
-            rows={4}
-            cols={50}
-            onChange={(e) =>
-              setQuestion({ ...question, question: e.target.value })
-            }
-          />
+            onChange={(value) => setQuestion({ ...question, question: value })}
+            />
         </label>
       </form>
       {question.type !== "true-false" && (

@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import { Quiz, Question, Option } from "../../Database";
 
+
 function QuizEditor() {
   const { quizId } = useParams();
   const navigate = useNavigate();
@@ -402,7 +403,7 @@ function QuizEditor() {
               <button onClick={() => goToQuestionEditor(index)}>edit</button>
             </h5>
             <p>Title: {question.title}</p>
-            <p>Question: {question.question}</p>
+            <p>Question: <span dangerouslySetInnerHTML={{ __html: question.question }} /></p>
             <p>Points: {question.points}</p>
             <p>Type: {question.type}</p>
             {question.options.map((option, optionIndex) => (
