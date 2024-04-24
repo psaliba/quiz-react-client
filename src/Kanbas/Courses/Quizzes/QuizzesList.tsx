@@ -75,18 +75,28 @@ function QuizzesList() {
     const quizSubDetails = () => {
       const currentDate = new Date();
       const availableDate = new Date(quiz.available);
+      const availableUntilDate = new Date(quiz.available_until);
       const isAvailable = currentDate >= availableDate;
+      const isClosed = availableUntilDate <= currentDate;
 
       // Formatting the date
-      const formattedDate = availableDate.toLocaleDateString();
+      const formattedAvailableDate = availableDate.toLocaleDateString();
+      const formattedDueDate = new Date(quiz.due).toLocaleDateString();
+
+      let statusMessage;
+      if (isAvailable) {
+        if (isClosed) {
+          statusMessage = `Closed | Due Date: ${formattedDueDate}`;
+        } else {
+          statusMessage = `Available ${formattedAvailableDate} | Due Date: ${formattedDueDate}`;
+        }
+      } else {
+        statusMessage = `Not available until ${formattedAvailableDate}`;
+      }
 
       return (
         <div>
-          {isAvailable
-            ? `Available ${formattedDate} | `
-            : `Not available until ${formattedDate}`}{" "}
-          {`Due Date: ${new Date(quiz.due).toLocaleDateString()} | `}
-          {quiz.points.toString()} points | {quiz.questions.length} Questions
+          {statusMessage} | {quiz.points.toString()} points | {quiz.questions.length} Questions
         </div>
       );
     };
