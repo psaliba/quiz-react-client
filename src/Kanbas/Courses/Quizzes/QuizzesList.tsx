@@ -96,9 +96,9 @@ function QuizzesList() {
         key={quiz.title}
       >
         <div>
-          <Link to={`Quiz Details/${quiz._id}`}>
+          <Link style={{ textDecoration: "none", color: "black" }}to={`Quiz Details/${quiz._id}`}>
             <div className="d-flex align-items-center">
-              <FaRocket className="me-2" />
+              <FaRocket className="me-2 green" />
               <strong>{quiz.title}</strong>
             </div>
           </Link>
@@ -110,9 +110,9 @@ function QuizzesList() {
             onClick={() => togglePublishQuiz(quiz)}
           >
             {quiz.published ? (
-              <FaCheckCircle className="text-success" />
+              <FaCheckCircle className="ms-2 text-success bigger-icon me-1" />
             ) : (
-              <FaBan className="text-danger" />
+              <FaBan className="ms-2 text-danger bigger-icon me-1" />
             )}
           </button>
 
@@ -124,7 +124,7 @@ function QuizzesList() {
   return (
     <div>
       <h1>Quizzes</h1>
-      <ul className="list-group wd-modules">
+      <ul className="list-group quiz-modules">
         {quizzes.map((quiz: Quiz) => renderAQuiz(quiz))}
       </ul>
     </div>

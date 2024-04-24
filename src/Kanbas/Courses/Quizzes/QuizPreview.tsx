@@ -7,7 +7,7 @@ import { FaExclamation, FaPencilAlt, FaRegCircle } from "react-icons/fa";
 
 function QuizPreview() {
   const [quiz, setQuiz] = useState<Quiz>();
-  const [questionNumber, setQuestionNumber] = useState<number>(1);
+  const [questionNumber, setQuestionNumber] = useState<number>(0);
   const { quizId } = useParams();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function QuizPreview() {
   };
 
   return (
-    <div>
+    <div className="ms-3">
       <h2>{quiz?.title}</h2>
 
       <h5

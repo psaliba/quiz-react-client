@@ -44,9 +44,9 @@ function Quizzes() {
   };
 
   return (
-    <div>
+    <div className="ms-3">
       <div>
-        <button>
+        <button className="grey-button">
           <FaEllipsisV />
         </button>
         <button className="red-button" onClick={handleCreateQuiz}>

@@ -68,11 +68,11 @@ function QuizDetails() {
   var available_until = new Date(quiz.available_until);
 
   return (
-    <div>
+    <div className="ms-3">
       <h1>Quiz Details</h1>
       <div>
-        <button onClick={handleGoToEditor}>Edit</button>
-        <button onClick={handleGoToPreview}>Preview</button>
+        <button className="grey-button" onClick={handleGoToEditor}>Edit</button>
+        <button className="grey-button" onClick={handleGoToPreview}>Preview</button>
         <button
           className="green-button"
           onClick={() => handlePublishQuiz(quiz)}

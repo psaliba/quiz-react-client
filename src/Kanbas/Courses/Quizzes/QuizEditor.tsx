@@ -77,7 +77,7 @@ function QuizEditor() {
 
     return (
       <div>
-        <h4>Details</h4>
+        <h1>Details</h1>
         <br></br>
         <form>
           <label>

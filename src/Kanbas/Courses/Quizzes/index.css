@@ -3,19 +3,40 @@ button {
     border-radius: 5px;
     margin-left: 10px;
     float: right;
+    border-style: none;
 }
 
 .red-button {
-    background-color: red;
+    background-color: #b3292e;
     color: white;
     border-radius: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #7c1c1f;
+}
+
+.grey-button {
+    background-color: #f5f5f5;
+    color: black;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #979797;
 }
 
 .green-button {
     background-color: green;
     color: white;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(1, 90, 1);
 }
 
 .answer-container {
@@ -53,4 +74,49 @@ select {
 
 .description {
     height: 200px
+}
+
+.quiz-modules,
+.quiz-modules * {
+  border-radius: 0%;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.quiz-modules {
+  margin-left: 8px;
+  border-radius: 4px;
+}
+
+.quiz-modules > li {
+  background-color: whitesmoke;
+  border: 1px solid gray !important;
+  border-radius: 4px;
+
+}
+
+.quiz-modules > li > div {
+  padding: 6px;
+}
+
+.quiz-modules > li > ul > li {
+  padding: 5px;
+  padding-left: 30px;
+}
+
+.quiz-modules > li > ul > li > ul > li {
+  padding: 5px;
+}
+
+.quiz-modules > li {
+  margin-bottom: 8px;
+}
+
+.green {
+    color: #08874b;
+}
+
+.bigger-icon {
+    font-size: 20px
 }
