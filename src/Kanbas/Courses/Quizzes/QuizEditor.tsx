@@ -424,9 +424,10 @@ function QuizEditor() {
                 style={{
                   margin: "8px",
                 }}>
-                <strong>Option {optionIndex + 1}</strong>: {option.toString()}
+                <strong>Option {optionIndex + 1}</strong>: {option.option.toString()}
               </p>
             ))}
+            <h5><strong>Correct Option: {question.correct_option + 1}</strong></h5>
           </div>
         ))}
         <button onClick={() => handleSave(quiz)} className="red-button">

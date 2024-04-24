@@ -10,11 +10,6 @@ import { FaTrash } from "react-icons/fa";
 function QuestionEditor() {
   const navigate = useNavigate();
 
-  var initialOptions: Option[] = [];
-  var initialOption: Option = {
-    option: "",
-  };
-
   const [quiz, setQuiz] = useState<Quiz>({
     _id: "0",
     course_id: "",
@@ -60,13 +55,12 @@ function QuestionEditor() {
         setQuestion(quiz.questions.at(qNum));
       }
       else {
-        var initialOptions: Option[] = [];
         const newQuestion = {
           title: "",
           type: "Multiple Choice",
           points: 1,
           question: "",
-          options: initialOptions,
+          options: [],
           correct_option: 0,
         } as Question;
         setQuestion(newQuestion);
@@ -98,14 +92,12 @@ function QuestionEditor() {
   };
 
   const addAnotherAnswer = () => {
+    let initialOption: Option = {
+      option: "",
+    };
     const newOptions: Option[] = [...question.options, initialOption];
     const newQuestion: Question = { ...question, options: newOptions };
     setQuestion(newQuestion);
-    var newQuestions: Question[] = quiz.questions;
-    newQuestions.splice(Number(questionNum), 1, question);
-    const newQuiz: Quiz = { ...quiz, questions: newQuestions };
-    setQuiz(newQuiz);
-    console.log(question.options.length)
   };
 
   const deleteOption = (index: number) => {
@@ -115,6 +107,19 @@ function QuestionEditor() {
 
     setQuestion(newQuestion);
   };
+
+  const updateOption = (event: any, index: Number) => {
+    var newOption: Option = { option: event.target.value };
+    var newOptions: Option[] = question.options;
+    newOptions.splice(Number(index), 1, newOption);
+    const newQuestion: Question = { ...question, options: newOptions };
+    setQuestion(newQuestion);
+  };
+
+  const setCorrectAnswer = (index: number) => {
+    const newQuestion: Question = { ...question, correct_option: index };
+    setQuestion(newQuestion);
+  }
 
   return (
     <div>
@@ -182,13 +187,20 @@ function QuestionEditor() {
         <div>
           {question.options.map((option, index) => (
             <div className="answer-container">
-              <input className="me-3" type="radio" name="mc-option" />
+              <input
+                className="me-3"
+                type="radio"
+                name="mc-option"
+                checked={question.correct_option === index}
+                onChange={() => setCorrectAnswer(index)}
+              />
               <textarea
                 id="myTextarea"
                 placeholder="Type your answer here."
                 value={option.option}
                 rows={2}
                 cols={50}
+                onChange={(e) => updateOption(e, index)}
               />
               <button onClick={() => deleteOption(index)}>
                 <FaTrash className="trash-icon"></FaTrash>
