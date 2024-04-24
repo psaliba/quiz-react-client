@@ -58,7 +58,7 @@ function KanbasNavigation() {
 
     return (
         
-            <ul className="wd-kanbas-navigation">
+            <ul className="wd-kanbas-navigation d-none d-md-block">
                 <li>
                     <a href="/Kanbas/Dashboard/screen.html"> <img src="/images/NU.png" height="40" width="40" alt="NU logo" /> </a>
                 </li>

@@ -12,21 +12,21 @@
     background-color: white;
   }
   .wd-kanbas-navigation li.wd-active a {
-    color: red;
+    color: #d41b2c;
   }
   .wd-kanbas-navigation a {
     color: white;
     text-decoration: none;
   }
   .wd-kanbas-navigation a svg {
-    color: red;
+    color: #d41b2c;
     font-size: 2em;
     margin-bottom: 5px;
   }
   
   .nuIcon * {
     background-image: "/images/NU.png";
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
     display: block;
   }

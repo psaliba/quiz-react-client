@@ -1,12 +1,12 @@
 .wd-status-text * {
-    color: red;
+    color: #d41b2c;
     font-size: 2em;
     margin-bottom: 2px;
     font-size: 1em;
     list-style: none;
 }
 .wd-status-header * {
-  color: red;
+  color: #d41b2c;
 }
 
 .wd-status-text li {
@@ -17,4 +17,10 @@
 .wd-status-text i {
   color: gray;
 
+}
+
+.course-header {
+  display: flex;
+  align-items: center;
+  color: #d41b2c;
 }
