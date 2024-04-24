@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { Question, Option, Quiz } from "../../Database";
@@ -8,6 +8,8 @@ import * as client from "./client";
 import { FaTrash } from "react-icons/fa";
 
 function QuestionEditor() {
+  const navigate = useNavigate();
+
   var initialOptions: Option[] = [];
   var initialOption: Option = {
     option: "",
@@ -50,25 +52,45 @@ function QuestionEditor() {
     questionNum?: string;
   }>();
 
-  console.log(
-    "This is the question number that is being edited: " + questionNum
-  );
-
   useEffect(() => {
-    initialOptions.push(initialOption);
     client.findQuizById(quizId).then((quiz) => {
       setQuiz(quiz);
+      const qNum: number = Number(questionNum);
+      if (qNum < quiz.questions.length) {
+        setQuestion(quiz.questions.at(qNum));
+      }
+      else {
+        var initialOptions: Option[] = [];
+        const newQuestion = {
+          title: "",
+          type: "Multiple Choice",
+          points: 1,
+          question: "",
+          options: initialOptions,
+          correct_option: 0,
+        } as Question;
+        setQuestion(newQuestion);
+        var newQuestions: Question[] = [...quiz.questions, newQuestion];
+        const newQuiz: Quiz = { ...quiz, questions: newQuestions };
+        setQuiz(newQuiz);
+      }
     });
-  });
+  }, []);
 
   const updateQuestion = async () => {
-    const newQuestions: Question[] = [...quiz.questions, question];
+    var newQuestions: Question[] = quiz.questions;
+    newQuestions.splice(Number(questionNum), 1, question);
     const newQuiz: Quiz = { ...quiz, questions: newQuestions };
     console.log("the new quiz being sent is: " + newQuiz);
     await client.updateQuiz(newQuiz);
     client.findQuizById(quizId).then((quiz) => {
       setQuiz(quiz);
     });
+    navigate("../Quizzes/Quiz Editor/" + quizId + "/Questions");
+  };
+
+  const cancel = () => {
+    navigate("../Quizzes/Quiz Editor/" + quizId + "/Questions");
   };
 
   const handleQuestionTypeChange = (event: any) => {
@@ -76,9 +98,14 @@ function QuestionEditor() {
   };
 
   const addAnotherAnswer = () => {
-    const newOption: Option[] = [...question.options, initialOption];
-    const newQuestion: Question = { ...question, options: newOption };
+    const newOptions: Option[] = [...question.options, initialOption];
+    const newQuestion: Question = { ...question, options: newOptions };
     setQuestion(newQuestion);
+    var newQuestions: Question[] = quiz.questions;
+    newQuestions.splice(Number(questionNum), 1, question);
+    const newQuiz: Quiz = { ...quiz, questions: newQuestions };
+    setQuiz(newQuiz);
+    console.log(question.options.length)
   };
 
   const deleteOption = (index: number) => {
@@ -89,25 +116,12 @@ function QuestionEditor() {
     setQuestion(newQuestion);
   };
 
-  const newQuestion = () => {
-    setQuestion({
-      title: "",
-      type: "Multiple Choice",
-      points: 1,
-      question: "",
-      options: initialOptions,
-      correct_option: 0,
-    });
-  };
-
   return (
     <div>
       <h4>
-        Questions <button>+ Question</button>
+        Questions
       </h4>
       <br></br>
-
-      <button onClick={newQuestion}>+ New Question</button>
       <form>
         <input
           type="text"
@@ -157,7 +171,7 @@ function QuestionEditor() {
             theme="snow"
             value={question.question}
             onChange={(value) => setQuestion({ ...question, question: value })}
-            />
+          />
         </label>
       </form>
       {question.type !== "true-false" && (
@@ -204,7 +218,7 @@ function QuestionEditor() {
         </div>
       )}
       {question.type === "fill-in-blanks" && <p>Fill in blanks placeholder</p>}
-      <button className="lazy-button-fix mt-2">Cancel</button>
+      <button onClick={cancel} className="lazy-button-fix mt-2">Cancel</button>
       <button onClick={updateQuestion} className="lazy-button-fix mt-2">
         Update Question
       </button>

@@ -374,6 +374,16 @@ function QuizEditor() {
       );
     };
 
+    const deleteQuestion = async (questionNumber: Number) => {
+      var newQuestions: Question[] = quiz.questions;
+      newQuestions.splice(Number(questionNumber), 1);
+      const newQuiz: Quiz = { ...quiz, questions: newQuestions };
+      await client.updateQuiz(newQuiz);
+      client.findQuizById(quizId).then((quiz) => {
+        setQuiz(quiz);
+      });
+    }
+
     return (
       <div className="ms-3 mt-2">
         <div >
@@ -383,7 +393,7 @@ function QuizEditor() {
             }}>
             Questions
           </h1>
-          <button className="red-button mt-1">+ Question</button>
+          <button className="red-button mt-1" onClick={() => goToQuestionEditor(quiz.questions.length)}>+ Question</button>
         </div>
         {quiz.questions.map((question, index) => (
           <div
@@ -393,28 +403,29 @@ function QuizEditor() {
               borderRadius: "4px",
               marginBottom: "10px",
             }}
-          > 
+          >
             <h4
               style={{
                 display: "inline-block",
               }}>
               <strong>
-              Question {index + 1}{" "}
+                Question {index + 1}{" "}
               </strong>
             </h4>
-            <button onClick={() => goToQuestionEditor(index)}>Edit Question</button>
+            <button className="btn btn-danger" onClick={() => deleteQuestion(index)}>Delete</button>
+            <button className="btn btn-primary" onClick={() => goToQuestionEditor(index)}>Edit</button>
             <p><strong>Title:</strong> {question.title}</p>
             <p><strong>Question:</strong> <span dangerouslySetInnerHTML={{ __html: question.question }} /></p>
             <p><strong>Points:</strong> {question.points}</p>
             <p><strong>Type:</strong> {question.type}</p>
             <h5><strong>Answers:</strong></h5>
             {question.options.map((option, optionIndex) => (
-                <p
-                  style={{
-                    margin: "8px",
-                  }}>
-                  <strong>Option {optionIndex + 1}</strong>: {option.toString()}
-                </p>
+              <p
+                style={{
+                  margin: "8px",
+                }}>
+                <strong>Option {optionIndex + 1}</strong>: {option.toString()}
+              </p>
             ))}
           </div>
         ))}
