@@ -418,7 +418,7 @@ function QuizEditor() {
             <p><strong>Question:</strong> <span dangerouslySetInnerHTML={{ __html: question.question }} /></p>
             <p><strong>Points:</strong> {question.points}</p>
             <p><strong>Type:</strong> {question.type}</p>
-            <h5><strong>Answers:</strong></h5>
+            {(question.type === "multiple-choice" || question.type === "fill-in-blanks") && <h5><strong>Answers:</strong></h5>}
             {question.options.map((option, optionIndex) => (
               <p
                 style={{
@@ -427,7 +427,7 @@ function QuizEditor() {
                 <strong>Option {optionIndex + 1}</strong>: {option.option.toString()}
               </p>
             ))}
-            <h5><strong>Correct Option: {question.correct_option + 1}</strong></h5>
+            {question.type !== "fill-in-blanks" && <h5><strong>Correct Option: {question.correct_option}</strong></h5>}
           </div>
         ))}
         <button onClick={() => handleSave(quiz)} className="red-button">

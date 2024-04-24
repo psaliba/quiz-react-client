@@ -41,7 +41,7 @@ export type Question = {
   points: number;
   question: string;
   options: Option[];
-  correct_option: number;
+  correct_option: string;
 };
 
 export type Option = {

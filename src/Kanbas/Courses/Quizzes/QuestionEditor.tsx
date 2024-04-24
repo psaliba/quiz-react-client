@@ -39,7 +39,7 @@ function QuestionEditor() {
     points: 1,
     question: "",
     options: [],
-    correct_option: 0,
+    correct_option: "0",
   });
 
   const { quizId, questionNum } = useParams<{
@@ -61,7 +61,7 @@ function QuestionEditor() {
           points: 1,
           question: "",
           options: [],
-          correct_option: 0,
+          correct_option: "0",
         } as Question;
         setQuestion(newQuestion);
         var newQuestions: Question[] = [...quiz.questions, newQuestion];
@@ -88,7 +88,7 @@ function QuestionEditor() {
   };
 
   const handleQuestionTypeChange = (event: any) => {
-    setQuestion({ ...question, type: event.target.value });
+    setQuestion({ ...question, type: event.target.value, options: [] });
   };
 
   const addAnotherAnswer = () => {
@@ -116,8 +116,8 @@ function QuestionEditor() {
     setQuestion(newQuestion);
   };
 
-  const setCorrectAnswer = (index: number) => {
-    const newQuestion: Question = { ...question, correct_option: index };
+  const setCorrectAnswer = (answer: string) => {
+    const newQuestion: Question = { ...question, correct_option: answer };
     setQuestion(newQuestion);
   }
 
@@ -191,8 +191,8 @@ function QuestionEditor() {
                 className="me-3"
                 type="radio"
                 name="mc-option"
-                checked={question.correct_option === index}
-                onChange={() => setCorrectAnswer(index)}
+                checked={question.correct_option === String(index + 1)}
+                onChange={() => setCorrectAnswer(String(index + 1))}
               />
               <textarea
                 id="myTextarea"
@@ -216,20 +216,53 @@ function QuestionEditor() {
               <label>
                 {" "}
                 True <br />
-                <input className="ms-2" type="radio" name="tf" />
+                <input
+                  className="ms-2"
+                  type="radio"
+                  name="tf"
+                  checked={question.correct_option === "true"}
+                  onChange={() => setCorrectAnswer("true")}
+                />
               </label>
             </div>
             <div className="tf-container me-2">
               <label>
                 {" "}
                 False <br />
-                <input type="radio" className="ms-2" name="tf" />
+                <input
+                  type="radio"
+                  className="ms-2"
+                  name="tf"
+                  checked={question.correct_option === "false"}
+                  onChange={() => setCorrectAnswer("false")}
+                />
               </label>
             </div>
           </div>
         </div>
       )}
-      {question.type === "fill-in-blanks" && <p>Fill in blanks placeholder</p>}
+      {question.type === "fill-in-blanks" && (
+        <div>
+          {question.options.map((option, index) => (
+            <div className="answer-container">
+              <h6>
+                Possible answer:
+              </h6>
+              <textarea
+                id="myTextarea"
+                placeholder="Type your answer here."
+                value={option.option}
+                rows={2}
+                cols={50}
+                onChange={(e) => updateOption(e, index)}
+              />
+              <button onClick={() => deleteOption(index)}>
+                <FaTrash className="trash-icon"></FaTrash>
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
       <button onClick={cancel} className="lazy-button-fix mt-2">Cancel</button>
       <button onClick={updateQuestion} className="lazy-button-fix mt-2">
         Update Question
