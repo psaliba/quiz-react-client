@@ -10,57 +10,14 @@ import {
 import { Quiz, Question, Option } from "../../Database";
 
 function QuizEditor() {
+
     const { quizId } = useParams();
     const navigate = useNavigate();
-
-    const [quiz, setQuiz] = useState<Quiz>(
-        {
-            _id: "0",
-            course_id: "",
-            title: "New Quiz",
-            description: "",
-            published: false,
-            available: new Date(),
-            available_until: new Date(),
-            due: new Date(),
-            quiz_type: "Graded Quiz",
-            points: 0,
-            assignment_group: "Quizzes",
-            shuffle_answers: false,
-            time_limit: 20,
-            multiple_attempts: false,
-            show_correct_answers: "After Submitted",
-            access_code: "",
-            one_question_at_a_time: true,
-            webcam_required: false,
-            lock_questions_after_answering: false,
-            questions: []
-        }
-    );
 
     var initialOptions: Option[] = [];
     var initialOption: Option = {
         option: ""
     };
-
-    useEffect(() => {
-        initialOptions.push(initialOption);
-        client.findQuizById(quizId).then((quiz) => {
-            setQuiz(quiz);
-        });
-
-    }, []);
-
-    const [question, setQuestion] = useState<Question>(
-        {
-            title: "",
-            type: "Multiple Choice",
-            points: 1,
-            question: "",
-            options: initialOptions,
-            correct_option: 0
-        }
-    );
 
     const handleSave = async (quiz: Quiz) => {
         await client.updateQuiz(quiz);
@@ -87,6 +44,38 @@ function QuizEditor() {
     }
 
     function Details() {
+        const [quiz, setQuiz] = useState<Quiz>(
+            {
+                _id: "0",
+                course_id: "",
+                title: "New Quiz",
+                description: "",
+                published: false,
+                available: new Date(),
+                available_until: new Date(),
+                due: new Date(),
+                quiz_type: "Graded Quiz",
+                points: 0,
+                assignment_group: "Quizzes",
+                shuffle_answers: false,
+                time_limit: 20,
+                multiple_attempts: false,
+                show_correct_answers: "After Submitted",
+                access_code: "",
+                one_question_at_a_time: true,
+                webcam_required: false,
+                lock_questions_after_answering: false,
+                questions: []
+            }
+        );
+
+        useEffect(() => {
+            client.findQuizById(quizId).then((quiz) => {
+                setQuiz(quiz);
+            });
+
+        }, []);
+
         return (
             <div>
                 <h4>Details</h4>
@@ -221,46 +210,105 @@ function QuizEditor() {
         );
     }
 
-    const newQuestion = () => {
-        setQuestion(
+
+
+
+    function Question() {
+
+        const [quiz, setQuiz] = useState<Quiz>(
+            {
+                _id: "0",
+                course_id: "",
+                title: "New Quiz",
+                description: "",
+                published: false,
+                available: new Date(),
+                available_until: new Date(),
+                due: new Date(),
+                quiz_type: "Graded Quiz",
+                points: 0,
+                assignment_group: "Quizzes",
+                shuffle_answers: false,
+                time_limit: 20,
+                multiple_attempts: false,
+                show_correct_answers: "After Submitted",
+                access_code: "",
+                one_question_at_a_time: true,
+                webcam_required: false,
+                lock_questions_after_answering: false,
+                questions: []
+            }
+        );
+
+
+        const [question, setQuestion] = useState<Question>(
             {
                 title: "",
                 type: "Multiple Choice",
                 points: 1,
                 question: "",
-                options: initialOptions,
+                options: [],
                 correct_option: 0
             }
-        )
-    }
-
-    const updateQuestion = async () => {
-        quiz.questions.push(question);
-        await client.updateQuiz(quiz);
-        client.findQuizById(quizId).then((quiz) => {
-            setQuiz(quiz);
-        });
-    }
-
-    function Questions() {
-        return (
-            <div>
-                <h4>Questions</h4>
-                <br></br>
-                <button onClick={newQuestion}>+ New Question</button>
-                <Question></Question>
-            </div>
         );
-    }
 
-    function Question() {
+        const { quizId } = useParams();
+        useEffect(() => {
+            initialOptions.push(initialOption);
+            client.findQuizById(quizId).then((quiz) => {
+                setQuiz(quiz);
+            });
+
+        }, []);
+
+        const updateQuestion = async () => {
+            const newQuestions: Question[] = [...quiz.questions, question]
+            const newQuiz: Quiz = { ...quiz, questions: newQuestions }
+            console.log("the new quiz being sent is: " + newQuiz)
+            await client.updateQuiz(newQuiz);
+            client.findQuizById(quizId).then((quiz) => {
+                setQuiz(quiz);
+            });
+        }
 
         const handleQuestionTypeChange = (event: any) => {
             setQuestion({ ...question, type: event.target.value });
         };
 
+        const addAnotherAnswer = () => {
+            const newOption: Option[] = [...question.options, initialOption]
+            const newQuestion: Question = { ...question, options: newOption }
+            setQuestion(newQuestion);
+        }
+
+
+        const deleteOption = (index: number) => {
+
+            const newOptions: Option[] = question.options.filter((_, i) => i !== index)
+
+            const newQuestion: Question = { ...question, options: newOptions }
+
+            setQuestion(newQuestion);
+        }
+
+        const newQuestion = () => {
+            setQuestion(
+                {
+                    title: "",
+                    type: "Multiple Choice",
+                    points: 1,
+                    question: "",
+                    options: initialOptions,
+                    correct_option: 0
+                }
+            )
+        }
+
         return (
             <div>
+                <h4>Questions</h4>
+                <br></br>
+                <button onClick={newQuestion}>+ New Question</button>
                 <form>
                     <input type="text" id="question-title" name="question-title" placeholder="Question Title"
                         value={question.title}
@@ -299,94 +347,52 @@ function QuizEditor() {
                 </form>
                 {question.type !== 'true-false' && <button onClick={addAnotherAnswer}>+ Add Another Answer</button>}
                 <h5>Answer:</h5>
-                {question.type === 'multiple-choice' && <MultipleChoice />}
-                {question.type === 'true-false' && <TrueFalse />}
-                {question.type === 'fill-in-blanks' && <FillInBlanks />}
+                {question.type === 'multiple-choice' && <div>
+                    {question.options.map((option, index) => (
+                        <div className="answer-container">
+                            <input
+                                className="me-3"
+                                type="radio"
+                                name="mc-option"
+                            />
+                            <textarea
+                                id="myTextarea"
+                                placeholder="Type your answer here."
+                                value={option.option}
+                                rows={2}
+                                cols={50}
+                            />
+                            <button onClick={() => deleteOption(index)}><FaTrash className="trash-icon"></FaTrash></button>
+                        </div>
+                    ))}
+                </div>}
+                {question.type === 'true-false' && <div className="answer-container">
+                    <div className="answer-container">
+                        <div className="tf-container me-2">
+                            <label> True <br /><input
+                                className="ms-2"
+                                type="radio"
+                                name="tf"
+                            /></label>
+                        </div>
+                        <div className="tf-container me-2">
+                            <label> False <br /><input
+                                type="radio"
+                                className="ms-2"
+                                name="tf"
+                            /></label>
+
+                        </div>
+                    </div>
+                </div>}
+                {question.type === 'fill-in-blanks' && <p>Fill in blanks placeholder</p>}
                 <button className="lazy-button-fix mt-2">Cancel</button>
                 <button onClick={updateQuestion} className="lazy-button-fix mt-2">Update Question</button>
             </div>
         );
     }
 
-    const addAnotherAnswer = () => {
-        const newOption: Option[] = [...question.options, initialOption]
-        const newQuestion: Question = { ...question, options: newOption }
-        setQuestion(newQuestion);
-    }
 
-    function MultipleChoice() {
-        return (
-            <div>
-                <MultipleChoiceAnswer></MultipleChoiceAnswer>
-            </div>
-        );
-    }
-
-    function TrueFalse() {
-        return (
-            <div className="answer-container">
-                <div className="answer-container">
-                    <div className="tf-container me-2">
-                        <label> True <br /><input
-                            className="ms-2"
-                            type="radio"
-                            name="tf"
-                        /></label>
-                    </div>
-                    <div className="tf-container me-2">
-                        <label> False <br /><input
-                            type="radio"
-                            className="ms-2"
-                            name="tf"
-                        /></label>
-
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    function FillInBlanks() {
-        return (
-            <div>
-                Fill in blanks placeholder
-            </div>
-        );
-    }
-
-    function MultipleChoiceAnswer() {
-        return (
-            <div>
-                {question.options.map((option, index) => (
-                    <div className="answer-container">
-                        <input
-                            className="me-3"
-                            type="radio"
-                            name="mc-option"
-                        />
-                        <textarea
-                            id="myTextarea"
-                            placeholder="Type your answer here."
-                            value={option.option}
-                            rows={2}
-                            cols={50}
-                        />
-                        <button onClick={() => deleteOption(index)}><FaTrash className="trash-icon"></FaTrash></button>
-                    </div>
-                ))}
-            </div>
-        )
-    }
-
-    const deleteOption = (index: number) => {
-        // question.options.splice(index, 1);
-
-        const newOptions: Option[] = question.options.filter((_, i) => i !== index)
-
-        const newQuestion: Question = { ...question, options: newOptions }
-
-        setQuestion(newQuestion);
-    }
 
     return (
         <div>
@@ -398,7 +404,7 @@ function QuizEditor() {
                 <Route path="Details"
                     element={<Details />} />
                 <Route path="Questions"
-                    element={<Questions />} />
+                    element={<Question />} />
             </Routes>
         </div>
     );
