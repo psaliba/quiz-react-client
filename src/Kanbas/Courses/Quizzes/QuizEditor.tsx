@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import * as client from "./client";
 import { Navigate, Route, Routes, useNavigate, useParams } from "react-router";
 import { Link, useLocation } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
 import { Quiz, Question, Option } from "../../Database";
 
 
@@ -78,41 +79,35 @@ function QuizEditor() {
     return (
       <div>
         <h1>Details</h1>
-        <br></br>
         <form>
           <label>
             Title:
-            <br></br>
             <input
               type="text"
               name="title"
+              className="ms-2"
               value={quiz.title}
               onChange={(e) => setQuiz({ ...quiz, title: e.target.value })}
             />
           </label>
-        </form>
-        <form>
+          <br></br>
           <label>
             Description:
-            <br></br>
-            <input
-              type="text"
-              name="description"
-              className="description"
+            <br />
+            <ReactQuill
+              theme="snow"
               value={quiz.description}
-              onChange={(e) =>
-                setQuiz({ ...quiz, description: e.target.value })
-              }
+              onChange={(value) => setQuiz({ ...quiz, description: value })}
             />
           </label>
         </form>
         <form>
           <label>
-            Quiz Type:
-            <br></br>
+            Quiz type:
             <select
               id="quiz-type"
               name="quiz-type"
+              className="ms-2"
               value={quiz.quiz_type}
               onChange={(e) => setQuiz({ ...quiz, quiz_type: e.target.value })}
             >
@@ -123,12 +118,12 @@ function QuizEditor() {
             </select>
           </label>
           <br></br>
-          <br></br>
           <label>
             Points:
             <input
               type="number"
               id="points"
+              className="ms-2"
               name="points"
               min="0"
               max="100"
@@ -139,13 +134,12 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
-            Assignment Group:
-            <br></br>
+            Assignment group:
             <select
               id="assignment-group"
               name="assignment-group"
+              className="ms-2"
               value={quiz.assignment_group}
               onChange={(e) =>
                 setQuiz({ ...quiz, assignment_group: e.target.value })
@@ -158,13 +152,13 @@ function QuizEditor() {
             </select>
           </label>
           <br></br>
-          <br></br>
           <label>
             Shuffle answers:
             <input
               type="checkbox"
               checked={quiz.shuffle_answers}
               id="shuffle-answers"
+              className="ms-2"
               name="shuffle-answers"
               onChange={(e) =>
                 setQuiz({ ...quiz, shuffle_answers: Boolean(e.target.value) })
@@ -172,13 +166,13 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
-            Time Limit
+            Time Limit:
             <input
               type="number"
               id="limit"
               name="limit"
+              className="ms-2"
               min="1"
               value={String(quiz.time_limit)}
               onChange={(e) =>
@@ -187,7 +181,6 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Allow multiple attempts:
             <input
@@ -195,19 +188,19 @@ function QuizEditor() {
               checked={quiz.multiple_attempts}
               id="multiple-attempts"
               name="multiple-attempts"
+              className="ms-2"
               onChange={(e) =>
                 setQuiz({ ...quiz, multiple_attempts: Boolean(e.target.value) })
               }
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Show correct answers:
-            <br></br>
             <select
               id="show-correct-answers"
               name="show-correct-answers"
+              className="ms-2"
               value={quiz.show_correct_answers}
               onChange={(e) =>
                 setQuiz({ ...quiz, show_correct_answers: e.target.value })
@@ -219,12 +212,11 @@ function QuizEditor() {
             </select>
           </label>
           <br></br>
-          <br></br>
           <label>
             Access code:
-            <br></br>
             <input
               type="text"
+              className="ms-2"
               name="access-code"
               value={quiz.access_code}
               onChange={(e) =>
@@ -233,7 +225,6 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             One question at a time:
             <input
@@ -241,6 +232,7 @@ function QuizEditor() {
               checked={quiz.one_question_at_a_time}
               id="one-question"
               name="one-question"
+              className="ms-2"
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
@@ -250,7 +242,6 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Webcam required:
             <input
@@ -258,12 +249,12 @@ function QuizEditor() {
               checked={quiz.webcam_required}
               id="webcam"
               name="webcam"
+              className="ms-2"
               onChange={(e) =>
                 setQuiz({ ...quiz, webcam_required: Boolean(e.target.value) })
               }
             />
           </label>
-          <br></br>
           <br></br>
           <label>
             Lock questions after answering:
@@ -272,6 +263,7 @@ function QuizEditor() {
               checked={quiz.lock_questions_after_answering}
               id="lock-questions"
               name="lock-questions"
+              className="ms-2"
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
@@ -281,12 +273,12 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Due date:
             <input
               type="date"
               id="due-date"
+              className="ms-2"
               name="due-date"
               value={String(quiz.due)}
               onChange={(e) =>
@@ -295,13 +287,13 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Available date:
             <input
               type="date"
               id="available-date"
               name="available-date"
+              className="ms-2"
               value={String(quiz.available)}
               onChange={(e) =>
                 setQuiz({
@@ -312,13 +304,13 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <br></br>
           <label>
             Until date:
             <input
               type="date"
               id="until-date"
               name="until-date"
+              className="ms-2"
               value={String(quiz.available_until)}
               onChange={(e) =>
                 setQuiz({

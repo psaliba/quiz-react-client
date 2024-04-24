@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 import { Question, Quiz } from "../../Database";
-import { useParams } from "react-router";
+import { Navigate, Route, Routes, useNavigate, useParams  } from "react-router";
 import * as client from "./client";
 import { FaExclamation, FaPencilAlt, FaRegCircle } from "react-icons/fa";
 
@@ -9,6 +9,7 @@ function QuizPreview() {
   const [quiz, setQuiz] = useState<Quiz>();
   const [questionNumber, setQuestionNumber] = useState<number>(0);
   const { quizId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (quizId) {
@@ -20,6 +21,10 @@ function QuizPreview() {
 
   const changeQuestion = (questionNumber: number) => {
     setQuestionNumber(questionNumber);
+  };
+
+  const handleGoToEditor = () => {
+    navigate("../Quizzes/Quiz Editor/" + quizId);
   };
 
   const getQuestion = (): Question | null => {
@@ -138,7 +143,9 @@ function QuizPreview() {
           float: "left",
           width: "100%",
           textAlign: "left"
-        }}>
+        }}
+        onClick={handleGoToEditor}
+        >
         <FaPencilAlt></FaPencilAlt> Keep Editing This Quiz
       </button>
 
