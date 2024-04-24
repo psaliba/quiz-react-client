@@ -38,10 +38,10 @@ function QuizzesList() {
   const quizContext = (quiz: Quiz) => {
     const popover = (
       <Popover id="context-menu">
-        <Popover.Body style={{ width: "110px" }}>
+        <Popover.Body style={{ width: "120px", height: "140px" }}>
           <button className="btn">
             {" "}
-            <Link to={`Quiz Details/${quiz._id}`}>Edit</Link>{" "}
+            <Link style={{ textDecoration: "none", color: "black" }} to={`Quiz Details/${quiz._id}`}>Edit</Link>{" "}
           </button>
 
           <button className="btn" onClick={deleteQuiz(quiz._id)}>

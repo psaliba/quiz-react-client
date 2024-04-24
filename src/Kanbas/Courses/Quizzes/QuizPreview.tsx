@@ -37,31 +37,33 @@ function QuizPreview() {
         style={{
           backgroundColor: "rgba(255, 0, 0, 0.1)",
           color: "red",
-          border: "1px solid red",
+          borderRadius: "4px",
+          padding: "8px",
         }}
       >
         <FaExclamation></FaExclamation> This is a preview of the published
         version of the quiz
       </h5>
 
-      <h4>
+      <h6>
         Started:{" "}
         {new Date().toLocaleTimeString("en-US", {
           hour: "numeric",
           minute: "2-digit",
           hour12: true,
         })}{" "}
-      </h4>
+      </h6>
 
       <hr></hr>
 
-      <div style={{ border: "1px solid black", padding: "10px" }}>
+      <div style={{ border: "1px solid black", padding: "0px", borderRadius: "4px",}}>
         <div
           style={{
             backgroundColor: "#d3d3d3",
             marginBottom: "10px",
-            padding: "10px",
-            width: "calc(100% - 20px)",
+            padding: "16px",
+            width: "100%",
+            borderRadius: "4px 4px 0px 0px"
           }}
         >
           <div
@@ -88,7 +90,7 @@ function QuizPreview() {
                 marginBottom: "10px",
               }}
             >
-              <FaRegCircle />
+              <FaRegCircle className="me-2"/>
               {option.toString()}
             </li>
           ))}
@@ -99,11 +101,12 @@ function QuizPreview() {
 
       <h5
         style={{
-          backgroundColor: "rgba(200, 200, 200, 1)",
-          border: "1px solid #ccc",
+          border: "1px solid black",
+          backgroundColor: "white",          
           padding: "10px",
           textAlign: "right",
-        }}
+          borderRadius: "4px",
+          }}
       >
         Quiz Saved at{" "}
         {new Date().toLocaleTimeString("en-US", {
@@ -113,7 +116,9 @@ function QuizPreview() {
         })}{" "}
         <button
           style={{
-            padding: "2px 5px",
+            padding: "6px 6px",
+            border: "1px solid black",
+            marginTop: "-2px",
             fontSize: "0.8rem",
             margin: "0 0 0 10px",
           }}
@@ -123,24 +128,32 @@ function QuizPreview() {
       </h5>
 
       <br />
-
-      <h6
+      
+      <button 
         style={{
           backgroundColor: "rgba(200, 200, 200, 0.5)",
           border: "1px solid gray",
-        }}
-      >
+          padding: "10px",
+          borderRadius: "4px",
+          float: "left",
+          width: "100%",
+          textAlign: "left"
+        }}>
         <FaPencilAlt></FaPencilAlt> Keep Editing This Quiz
-      </h6>
+      </button>
 
       <br />
+      <br />
+
+      <br />
+
 
       <h4>Questions:</h4>
       <ul>
         {quiz?.questions.map((q, index) => (
-          <li style={{ display: "block" }}>
+          <li style={{ display: "flex" }}>
             <button
-              style={{ width: "100%", margin: "5px 0" }}
+              style={{ width: "9%", margin: "5px 0", padding: "5px 0px",borderWidth: "1px" }}
               onClick={() => changeQuestion(index)}
             >
               Question {index + 1}
