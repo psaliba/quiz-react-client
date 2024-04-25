@@ -127,6 +127,7 @@ function QuizEditor() {
               name="points"
               min="0"
               max="100"
+              disabled
               value={String(quiz.points)}
               onChange={(e) =>
                 setQuiz({ ...quiz, points: Number(e.target.value) })

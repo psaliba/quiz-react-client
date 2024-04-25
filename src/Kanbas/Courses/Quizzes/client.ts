@@ -27,6 +27,8 @@ export const deleteQuiz = async (quizId: any) => {
 };
 
 export const updateQuiz = async (quiz: any) => {
+  const totalPoints = quiz.questions.reduce((acc: any, q: any) => acc + q.points, 0);
+  quiz.points = totalPoints;
   const resp = await axios.put(`${QUIZZES_API}/${quiz._id}`, quiz);
   return resp.data;
 };
