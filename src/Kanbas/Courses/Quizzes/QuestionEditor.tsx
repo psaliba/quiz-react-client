@@ -235,8 +235,8 @@ function QuestionEditor() {
                   className="ms-2"
                   type="radio"
                   name="tf"
-                  checked={question.correct_option === "true"}
-                  onChange={() => setCorrectAnswer("true")}
+                  checked={question.correct_option === "1"}
+                  onChange={() => setCorrectAnswer("1")}
                 />
               </label>
             </div>
@@ -248,8 +248,8 @@ function QuestionEditor() {
                   type="radio"
                   className="ms-2"
                   name="tf"
-                  checked={question.correct_option === "false"}
-                  onChange={() => setCorrectAnswer("false")}
+                  checked={question.correct_option === "0"}
+                  onChange={() => setCorrectAnswer("0")}
                 />
               </label>
             </div>

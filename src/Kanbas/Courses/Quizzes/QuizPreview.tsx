@@ -84,7 +84,9 @@ function QuizPreview() {
             <strong>Points: {getQuestion()?.points}</strong>
           </div>
         </div>
-        <ul style={{ padding: "0 10px" }}>{getQuestion()?.question}</ul>
+        <ul style={{ padding: "0 10px" }}>
+          <div dangerouslySetInnerHTML={{ __html: getQuestion()?.question ?? "<div/>" }}></div>
+        </ul>
         <ul>
           {getQuestion()?.options.map((option, index) => (
             <li
@@ -96,7 +98,7 @@ function QuizPreview() {
               }}
             >
               <FaRegCircle className="me-2"/>
-              {option.toString()}
+              {option.option.toString()} {/* wtf ryan?!! */}
             </li>
           ))}
         </ul>
