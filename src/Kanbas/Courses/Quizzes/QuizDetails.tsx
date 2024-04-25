@@ -83,6 +83,7 @@ function QuizDetails() {
       </div>
       <h2>{quiz.title}</h2>
       <table>
+        <tbody>
         <tr>
           <td>
             <strong>Quiz Type</strong>
@@ -167,6 +168,7 @@ function QuizDetails() {
           </td>
           <td>{available_until.toDateString()}</td>
         </tr>
+        </tbody>
       </table>
     </div>
   );

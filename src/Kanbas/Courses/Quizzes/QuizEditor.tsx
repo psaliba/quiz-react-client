@@ -91,15 +91,15 @@ function QuizEditor() {
             />
           </label>
           <br></br>
-          <label>
-            Description:
+          <div>
+            <b style={{paddingBottom: '8px'}}>Description: </b>
             <br />
             <ReactQuill
               theme="snow"
               value={quiz.description}
               onChange={(value) => setQuiz({ ...quiz, description: value })}
             />
-          </label>
+          </div>
         </form>
         <form>
           <label>
@@ -161,7 +161,7 @@ function QuizEditor() {
               className="ms-2"
               name="shuffle-answers"
               onChange={(e) =>
-                setQuiz({ ...quiz, shuffle_answers: Boolean(e.target.value) })
+                setQuiz({ ...quiz, shuffle_answers: !quiz.shuffle_answers })
               }
             />
           </label>
@@ -190,7 +190,7 @@ function QuizEditor() {
               name="multiple-attempts"
               className="ms-2"
               onChange={(e) =>
-                setQuiz({ ...quiz, multiple_attempts: Boolean(e.target.value) })
+                setQuiz({ ...quiz, multiple_attempts: !quiz.multiple_attempts })
               }
             />
           </label>
@@ -206,7 +206,7 @@ function QuizEditor() {
                 setQuiz({ ...quiz, show_correct_answers: e.target.value })
               }
             >
-              <option value="Immediately">Immedidately</option>
+              <option value="Immediately">Immediately</option>
               <option value="After-Submitted">After Submitted</option>
               <option value="Never">Never</option>
             </select>
@@ -236,7 +236,7 @@ function QuizEditor() {
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
-                  one_question_at_a_time: Boolean(e.target.value),
+                  one_question_at_a_time: !quiz.one_question_at_a_time,
                 })
               }
             />
@@ -251,7 +251,7 @@ function QuizEditor() {
               name="webcam"
               className="ms-2"
               onChange={(e) =>
-                setQuiz({ ...quiz, webcam_required: Boolean(e.target.value) })
+                setQuiz({ ...quiz, webcam_required: quiz.webcam_required })
               }
             />
           </label>
@@ -267,7 +267,7 @@ function QuizEditor() {
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
-                  lock_questions_after_answering: Boolean(e.target.value),
+                  lock_questions_after_answering: quiz.lock_questions_after_answering,
                 })
               }
             />
@@ -280,8 +280,9 @@ function QuizEditor() {
               id="due-date"
               className="ms-2"
               name="due-date"
-              value={String(quiz.due)}
+              value={new Date(quiz.due).toISOString().slice(0, 16)}
               onChange={(e) =>
+                
                 setQuiz({ ...quiz, due: new Date(Date.parse(e.target.value)) })
               }
             />
@@ -294,7 +295,7 @@ function QuizEditor() {
               id="available-date"
               name="available-date"
               className="ms-2"
-              value={String(quiz.available)}
+              value={new Date(quiz.available).toISOString().slice(0, 16)}
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
@@ -310,7 +311,7 @@ function QuizEditor() {
               id="until-date"
               name="until-date"
               className="ms-2"
-              value={String(quiz.available_until)}
+              value={new Date(quiz.available_until).toISOString().slice(0, 16)}
               onChange={(e) =>
                 setQuiz({
                   ...quiz,
@@ -420,7 +421,7 @@ function QuizEditor() {
             <p><strong>Type:</strong> {question.type}</p>
             {(question.type === "multiple-choice" || question.type === "fill-in-blanks") && <h5><strong>Answers:</strong></h5>}
             {question.options.map((option, optionIndex) => (
-              <p
+              <p key={optionIndex}
                 style={{
                   margin: "8px",
                 }}>

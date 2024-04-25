@@ -42,7 +42,7 @@ export default function Profile() {
           <input value={profile.lastName} onChange={(e) =>
             setProfile({ ...profile, lastName: e.target.value })}/>
             <br></br> Date of Birth:
-          <input value={profile.dob.slice(0,10)} type="date" onChange={(e) =>
+          <input value={(profile.dob) ? profile.dob.slice(0,10) : ""} type="date" onChange={(e) =>
             setProfile({ ...profile, dob: e.target.value })}/>
             <br></br> Email:
           <input value={profile.email} onChange={(e) =>

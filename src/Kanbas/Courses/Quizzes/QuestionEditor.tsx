@@ -57,7 +57,7 @@ function QuestionEditor() {
       else {
         const newQuestion = {
           title: "",
-          type: "Multiple Choice",
+          type: "multiple-choice",
           points: 1,
           question: "",
           options: [],
@@ -122,7 +122,13 @@ function QuestionEditor() {
   }
 
   return (
-    <div>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "left",
+      padding: "20px",
+
+    }}>
       <h4>
         Questions
       </h4>
@@ -170,23 +176,26 @@ function QuestionEditor() {
           Enter your question and multiple answers, then select the one correct
           answer.
         </p>
-        <label>
+        <div>
           <h5>Question:</h5>
           <ReactQuill
             theme="snow"
             value={question.question}
             onChange={(value) => setQuestion({ ...question, question: value })}
           />
-        </label>
+        </div>
+
       </form>
-      {question.type !== "true-false" && (
-        <button onClick={addAnotherAnswer}>+ Add Another Answer</button>
-      )}
-      <h5>Answer:</h5>
-      {question.type === "multiple-choice" && (
+
+      <h5>Answer: </h5>
+      
+      { (question.type === "multiple-choice") && (
         <div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
           {question.options.map((option, index) => (
-            <div className="answer-container">
+            
+            <div key={index} className="answer-container" style={{padding: '10px'}}>
+              
               <input
                 className="me-3"
                 type="radio"
@@ -205,8 +214,14 @@ function QuestionEditor() {
               <button onClick={() => deleteOption(index)}>
                 <FaTrash className="trash-icon"></FaTrash>
               </button>
+              
             </div>
+           
           ))}
+          <br />
+          
+        </div>
+        
         </div>
       )}
       {question.type === "true-false" && (
@@ -242,13 +257,14 @@ function QuestionEditor() {
         </div>
       )}
       {question.type === "fill-in-blanks" && (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column'}}>
           {question.options.map((option, index) => (
-            <div className="answer-container">
-              <h6>
+            <div key={index} className="answer-container"  style={{padding: '10px'}}>
+              
+              <h6 style={{marginRight: '10px'}}>
                 Possible answer:
               </h6>
-              <textarea
+              <textarea 
                 id="myTextarea"
                 placeholder="Type your answer here."
                 value={option.option}
@@ -260,13 +276,19 @@ function QuestionEditor() {
                 <FaTrash className="trash-icon"></FaTrash>
               </button>
             </div>
+            
           ))}
+         
         </div>
       )}
-      <button onClick={cancel} className="lazy-button-fix mt-2">Cancel</button>
-      <button onClick={updateQuestion} className="lazy-button-fix mt-2">
-        Update Question
-      </button>
+      {question.type !== "true-false" && ( <button onClick={addAnotherAnswer}>+ Add Another Answer</button>)}
+      <div>
+        <button onClick={cancel} className="lazy-button-fix mt-2">Cancel</button>
+        <button onClick={updateQuestion} className="lazy-button-fix mt-2">
+          Update Question
+        </button>
+        </div>
+
     </div>
   );
 }
